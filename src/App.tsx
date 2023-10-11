@@ -1,8 +1,12 @@
 import React from 'react'
+import CodeEditor from './components/coding/CodeEditor'
+
 
 const App = () => {
   return (
-    <div><h1>Welcome </h1></div>
+    <div>
+      <CodeEditor/>
+    </div>
   )
 }
 
