@@ -1,11 +1,16 @@
 import React from 'react'
 import CodeEditor from './components/coding/CodeEditor'
+import ProblemList from './components/coding/ProblemList'
+// import Navbar from './components/Navbar/Navbar'
 
 
-const App = () => {
+const App:React.FC = () => {
   return (
     <div>
-      <CodeEditor/>
+
+      {/* <Navbar/> */}
+      {/* <CodeEditor/> */}
+      <ProblemList/>
     </div>
   )
 }

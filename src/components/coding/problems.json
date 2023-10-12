@@ -1,0 +1,44 @@
+[
+    {
+        "id":1,
+        "title":"breath for search",
+        "category_id":1,
+        "code_id":1
+    },
+    {
+        "id":2,
+        "title":"depth for search",
+        "category_id":1,
+        "code_id":2
+    },
+    {
+        "id":3,
+        "title":"breath for search",
+        "category_id":1,
+        "code_id":3
+    },
+    {
+        "id":4,
+        "title":"height/depth of binary tree",
+        "category_id":2,
+        "code_id":4
+    },
+    {
+        "id":5,
+        "title":"diameter of binary tree",
+        "category_id":2,
+        "code_id":5
+    },
+    {
+        "id":6,
+        "title":"subsets of string",
+        "category_id":5,
+        "code_id":6
+    },
+    {
+        "id":7,
+        "title":"permutation of string",
+        "category_id":5,
+        "code_id":7
+    }
+]
