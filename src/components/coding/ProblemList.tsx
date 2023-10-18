@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Endpoints } from "../../constant";
 import axios from "axios";
+import lodash from "lodash"
 
 const ProblemList: React.FC = () => {
   const [listt, setListt] = useState<any[]>();
   const [loading, setLoading] = useState(false);
-  /**
-   *  GROUP BY THE PROBLEMS BY CATEGORY ID
-   */
+  const navigate=useNavigate()
 
   const getProblemList = async () => {
     try {
@@ -31,24 +32,27 @@ const ProblemList: React.FC = () => {
   return (
     <div className="row container mt-5 mx-auto">
       {listt && listt.length > 0
-        ? listt.map((it, index) => {
+        ? listt.sort().map((it, index) => {
             return (
-              <div className="col-md-4 ">
+              <div key={index} className="col-md-4 p-4">
                 <ul key={index} className="list-group">
                   <li
                     key={it.category}
                     className="list-group-item active"
                     aria-current="true"
                   >
-                    {it?.category}
+                    {lodash.upperFirst(it?.category)}
                   </li>
 
                   {it &&
                     it.problems &&
                     it.problems.length > 0 &&
-                    it.problems.map((item: { title: string }, ind: number) => {
+                    it.problems.map((item: { title: string ,code:string,_id:string}, ind: number) => {
                       return (
-                        <li key={ind} className="list-group-item shadow">
+                        <li key={ind} className="list-group-item shadow"  style={{cursor: "pointer"}}
+                        onClick={()=>navigate(Endpoints.COMPILER.replace(":id",item._id),
+                        {state:{code:item.code}})}
+                        >
                           {item?.title}
                         </li>
                       );
