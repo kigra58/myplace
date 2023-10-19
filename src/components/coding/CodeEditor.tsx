@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { COMPILER_URL } from "../../constant";
+import { COMPILER_URL, CodingEndpoints } from "../../constant";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import lodash from "lodash";
@@ -27,6 +27,10 @@ const CodeEditor: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
   const [output, setOutput] = useState("");
+  const [prevData,setPrevData]=useState({
+    title:"",
+    category:""
+  })
   const [list, setList] = useState({
     code: "",
     language: "js",
@@ -56,7 +60,7 @@ const CodeEditor: React.FC = () => {
   const compileHandler = async (args: ILangData) => {
     try {
       setLoading(true);
-      const { data } = await axios.post(`https://api.codex.jaagrav.in`, args);
+      const { data } = await axios.post(`${COMPILER_URL}`, args);
       if (
         data &&
         data.status === 200 &&
@@ -103,10 +107,14 @@ const CodeEditor: React.FC = () => {
    */
   const getProblemDetails = (problemId:string) => {
       axios.get(
-        `http://localhost:3005/api/coding/problem-details/${problemId}`
+        `${CodingEndpoints.PROBLEM_DETAILS?.replace(":id",problemId)}`
       ).then(({data})=>{
         if (data && data.success) {
-          setList({ ...list, code:data.data.code})
+          setList({ ...list, code:data.data.code});
+          setPrevData({...prevData,
+            title:data.data.title,
+            category:data.data.category
+          });
         }
       }).catch((err)=>console.error(err))
     };
@@ -118,25 +126,23 @@ const CodeEditor: React.FC = () => {
    */  
   const updateCode=async(id:string|undefined,code:string)=>{
     try {
-      if(id!=="" && code!==""){
       setSaveLoading(true);
-      const {data} = await axios.post(`http://localhost:3005/api/coding/create-new-problem`,{
+      if(id!=="" && code!==""){
+      const {data} = await axios.post(`${CodingEndpoints.CREATE_NEW_PROBLEM}`,{
         problemId:id,
         code
       });
       if(data && data.success){
-        // console.log("===============",data.message);
-       return <Toast success={data.success} message={data.message} />;
+        <Toast success={data.success} message={data.message} />;
       }
-      return <Toast success={data.success} message={data.message} />;
+      <Toast success={data.success} message={data.message} />;
+      setSaveLoading(false);
     }
     setSaveLoading(false);
   } catch (error) {
     console.error(error)
-    setSaveLoading(false);
   };
   setSaveLoading(false);
-
 }  
 
 
@@ -153,8 +159,9 @@ const CodeEditor: React.FC = () => {
   return (
     <div>
       <div className="row col-md-8 mt-3 p-2">
+
+        {/* LANGUAGES SELECT  */}
         <div className="col-sm-3">
-          {/* LANGUAGES SELECT  */}
           <select
             defaultValue="vs-dark"
             onChange={(e) => selectLanguageHandler(e)}
@@ -172,8 +179,9 @@ const CodeEditor: React.FC = () => {
               ))}
           </select>
         </div>
+
+        {/* THEME SELECT    */}
         <div className="col-sm-3">
-          {/* THEME SELECT    */}
           <select
             onChange={(e) => selectThemeHandler(e)}
             className="form-control shadow-sm"
@@ -189,6 +197,10 @@ const CodeEditor: React.FC = () => {
             ;
           </select>
         </div>
+        <div className="col-sm-5">
+          <h5><b>{`${lodash.upperFirst(prevData?.title)}  { ${lodash.upperFirst(prevData?.category)} }`}</b></h5>
+        </div>
+
       </div>
       <div className="row p-1">
         <div className="col-md-9">
@@ -199,6 +211,9 @@ const CodeEditor: React.FC = () => {
             // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}
             value={list.code}
             theme={changeTheme}
+            options={{
+              fontSize: 18,
+            }}
             onChange={(val) => val && setList({ ...list, code: val })}
           />
         </div>

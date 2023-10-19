@@ -7,7 +7,8 @@ const Navbar: React.FC = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3">
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="#">
-          CodeHUb
+        <img src={`${process.env.PUBLIC_URL}/logo192.png`} alt="" width="30" 
+           height="24" className="d-inline-block align-text-top"/>
         </NavLink>
         <button
           className="navbar-toggler"
@@ -22,13 +23,13 @@ const Navbar: React.FC = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink className="nav-link" aria-current="page" to={Endpoints.PROBLEMS} >
+            <NavLink className="nav-link fw-bold" aria-current="page" to={Endpoints.PROBLEMS} >
               Coding Problems
             </NavLink>
-            <NavLink className="nav-link" to={Endpoints.COMPILER} >
+            {/* <NavLink className="nav-link fw-bold" to={Endpoints.COMPILER} >
               Compiler
-            </NavLink>
-            <NavLink className="nav-link" to={Endpoints.CREATE_NEW_PROBLEM} >
+            </NavLink> */}
+            <NavLink className="nav-link fw-bold" to={Endpoints.CREATE_NEW_PROBLEM} >
                Add Problem
             </NavLink>
           </div>

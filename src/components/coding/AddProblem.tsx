@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { COMPILER_URL, firstELe, lastELe } from "../../constant";
+import { COMPILER_URL, CodingEndpoints, firstELe, lastELe } from "../../constant";
 import Editor from "@monaco-editor/react";
 import Themes from "./themes.json";
 import lodash from "lodash";
@@ -29,19 +29,19 @@ const onSubmit= async () => {
     try {
       setLoading(true);
       const {title,category,code}=changeText;
-      const {data}=await axios.post(`http://localhost:3005/api/coding/create-new-problem`,
+      const {data}=await axios.post(`${CodingEndpoints.CREATE_NEW_PROBLEM}`,
       {code,title,category});
       if(data && data.success){
-        return <Toast success={data.success} message={data.message} />
+        return <Toast success={data.success} message={data.message} />;
       }
-      <Toast success={data.success} message={data.message} />
-      setLoading(false)
+      <Toast success={data.success} message={data.message} />;
+      setLoading(false);
       
     } catch (error) {
       console.error(error);
-      setLoading(false)
+      setLoading(false);
     };
-    setLoading(false)
+    setLoading(false);
 }
 
 
@@ -106,7 +106,7 @@ const onSubmit= async () => {
 
  useEffect(()=>{
   getCompilerList(COMPILER_URL.concat("/list"))
-  getCategoryList("http://localhost:3005/api/coding/problem-category")
+  getCategoryList(`${CodingEndpoints.PROBELM_CATEGORY}`)
  },[])
 
 //  console.log("==============category",changeText?.category)
@@ -179,11 +179,10 @@ const onSubmit= async () => {
                   {it.name}
                 </option>
               ))}
-            ;
           </select>
+        </div>
 
           {/* SUBMIT BUTTON  */}
-        </div>
         <div className="col-md-1">
             <button className="btn btn-dark" onClick={()=>onSubmit()}> Submit 
              {loading && (
@@ -193,7 +192,6 @@ const onSubmit= async () => {
              )}
             </button>
         </div>
-     
       </div>
    
       {/* CODE EDITOR  */}

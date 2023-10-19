@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Endpoints } from "../../constant";
+import { CodingEndpoints, Endpoints } from "../../constant";
 import axios from "axios";
 import lodash from "lodash"
 
@@ -12,9 +12,7 @@ const ProblemList: React.FC = () => {
   const getProblemList = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `http://localhost:3005/api/coding/problems`
-      );
+      const { data } = await axios.get( `${CodingEndpoints.PROBLEMS}`);
       if (data && data.success) {
         setListt(data.data);
       }
