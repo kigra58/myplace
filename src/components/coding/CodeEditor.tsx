@@ -22,9 +22,10 @@ interface ICompiler {
 const CodeEditor: React.FC = () => {
   const params=useParams();
   const [compilerList, setCompilerList] = useState<ICompiler[]>();
-  const [changeTheme, setChangeTheme] = useState("");
+  const [changeTheme, setChangeTheme] = useState("vs-dark");
   const [changeLang, setChangeLang] = useState("");
   const [loading, setLoading] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
   const [output, setOutput] = useState("");
   const [list, setList] = useState({
     code: "",
@@ -55,7 +56,7 @@ const CodeEditor: React.FC = () => {
   const compileHandler = async (args: ILangData) => {
     try {
       setLoading(true);
-      const { data } = await axios.post(`${URL}`, args);
+      const { data } = await axios.post(`https://api.codex.jaagrav.in`, args);
       if (
         data &&
         data.status === 200 &&
@@ -118,21 +119,25 @@ const CodeEditor: React.FC = () => {
   const updateCode=async(id:string|undefined,code:string)=>{
     try {
       if(id!=="" && code!==""){
+      setSaveLoading(true);
       const {data} = await axios.post(`http://localhost:3005/api/coding/create-new-problem`,{
         problemId:id,
         code
       });
       if(data && data.success){
-        console.log("===============",data.message);
-       return <Toast success={data.success} message={data.message} />
-      }else{
-       return <Toast success={data.success} message={data.message} />
+        // console.log("===============",data.message);
+       return <Toast success={data.success} message={data.message} />;
       }
+      return <Toast success={data.success} message={data.message} />;
     }
-    } catch (error) {
-      console.error(error)
-    };
-  }  
+    setSaveLoading(false);
+  } catch (error) {
+    console.error(error)
+    setSaveLoading(false);
+  };
+  setSaveLoading(false);
+
+}  
 
 
   useEffect(() => {
@@ -147,7 +152,7 @@ const CodeEditor: React.FC = () => {
 
   return (
     <div>
-      <div className="row col-md-8 mt-4 p-1">
+      <div className="row col-md-8 mt-3 p-2">
         <div className="col-sm-3">
           {/* LANGUAGES SELECT  */}
           <select
@@ -159,7 +164,9 @@ const CodeEditor: React.FC = () => {
             {compilerList &&
               compilerList.length > 0 &&
               compilerList.map((it, index) => (
-                <option key={index} value={it.language}>
+                <option key={index} 
+                 selected={it.language==="js"}
+                 value={it.language}>
                   {lodash.upperCase(it.language)}
                 </option>
               ))}
@@ -168,7 +175,6 @@ const CodeEditor: React.FC = () => {
         <div className="col-sm-3">
           {/* THEME SELECT    */}
           <select
-            defaultValue={Themes[0].value}
             onChange={(e) => selectThemeHandler(e)}
             className="form-control shadow-sm"
             name="Themes"
@@ -176,7 +182,7 @@ const CodeEditor: React.FC = () => {
             {Themes &&
               Themes.length > 0 &&
               Themes.map((it, index) => (
-                <option key={index} value={it.value}>
+                <option selected={it.value==="vs-dark"} key={index} value={it.value}>
                   {it.name}
                 </option>
               ))}
@@ -233,7 +239,7 @@ const CodeEditor: React.FC = () => {
             onClick={() =>updateCode(params.id,list.code)}
           >
             SAVE CODE
-            {loading && (
+            {saveLoading && (
               <div className="spinner-grow spinner-grow-sm" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>

@@ -62,7 +62,10 @@ const ProblemList: React.FC = () => {
             );
           })
         : loading
-        ? "Loading..."
+        ? (<div className="spinner-grow spinner-grow-sm" role="status">
+             <span className="visually-hidden">Loading...</span>
+           </div>
+          )
         : "Data Not Found"}
     </div>
   );

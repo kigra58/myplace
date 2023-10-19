@@ -1,4 +1,5 @@
 import React from 'react'
+import { ADD_PROBLEM } from '../../constant';
 
 interface IProps{
     from:string;
@@ -7,7 +8,7 @@ interface IProps{
 
 const Modal:React.FC<IProps> = ({from,title}) => {
     switch(from){
-        case "addProblem" :
+        case ADD_PROBLEM :
             
             return (
               <div className="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
