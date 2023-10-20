@@ -23,13 +23,13 @@ const Navbar: React.FC = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink className="nav-link fw-bold" aria-current="page" to={Endpoints.PROBLEMS} >
+            <NavLink className="nav-link " aria-current="page" to={Endpoints.PROBLEMS} >
               Coding Problems
             </NavLink>
-            {/* <NavLink className="nav-link fw-bold" to={Endpoints.COMPILER} >
+            {/* <NavLink className="nav-link " to={Endpoints.COMPILER} >
               Compiler
             </NavLink> */}
-            <NavLink className="nav-link fw-bold" to={Endpoints.CREATE_NEW_PROBLEM} >
+            <NavLink className="nav-link " to={Endpoints.CREATE_NEW_PROBLEM} >
                Add Problem
             </NavLink>
           </div>

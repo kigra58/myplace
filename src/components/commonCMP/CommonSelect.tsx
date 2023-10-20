@@ -38,7 +38,7 @@ const CommonSelect: React.FC<IProps> = ({
 
   return (
     <div className={divClass}>
-      <select
+      <select id="categorySelect"
         onChange={(e) => onChange(e)}
         className="form-control shadow-sm"
         name={name}
@@ -86,16 +86,7 @@ const CommonSelect: React.FC<IProps> = ({
               </option>
             );
         })}
-        {/* {from ===  &&
-          arrData &&
-          arrData.length > 0 &&
-          arrData.map((it: string, index) => {
-            return (
-              <option key={index} selected={it === selectEle} value={it}>
-                {it}
-              </option>
-            );
-          })} */}
+  
         {from === FONTSIZE &&
           arrData &&
           arrData.length > 0 &&

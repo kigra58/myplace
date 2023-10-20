@@ -27,7 +27,7 @@ const AddProblem: React.FC = () => {
   const [changeText, setChangeText] = useState({
     title: "",
     category: "",
-    language: "",
+    language: "js",
     code: "",
     input: "",
     theme: Themes[1].value,
@@ -55,7 +55,7 @@ const AddProblem: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     if (value !== "") {
-      if (name === "languages") {
+      if (name === "language") {
         setCompilerOutput("");
       }
       setChangeText((pre) => {
@@ -112,11 +112,13 @@ const AddProblem: React.FC = () => {
     getCategoryList(`${CodingEndpoints.PROBELM_CATEGORY}`);
   }, []);
 
+
+  console.log("==============changeText",changeText)
+
   return (
     <div className="p-1">
       <div className="row mt-5">
-        {/* CATEGORY  */}
-          
+          {/* CATEGORY  */}
           {categoryList && categoryList.length>0 && (
               <CommonSelect 
                 divClass="col-md-2"
@@ -127,7 +129,7 @@ const AddProblem: React.FC = () => {
                 from="category"
               />
 
-            )}
+          )}
 
         {/* TITLE  */}
         <div className="col-md-3">
@@ -146,7 +148,7 @@ const AddProblem: React.FC = () => {
             <CommonSelect 
               divClass="col-md-2"
               onChange={(e) => onChangeHandler(e)}
-              name="languages"
+              name="language"
               arrData={compilerList as any[]}
               selectEle="js"
                from={LANGUAGES}
@@ -175,9 +177,8 @@ const AddProblem: React.FC = () => {
       </div>
 
       {/* CODE EDITOR  */}
-      <div className="row">
+      <div className="row p-2">
         <div className="col-md-9">
-          <div className="mt-5">
             <Editor
               height="85vh"
               defaultLanguage={"javascript"}
@@ -189,8 +190,7 @@ const AddProblem: React.FC = () => {
                 val && setChangeText({ ...changeText, code: val })
               }
             />
-          </div>
-
+        </div>
           <InputOutputCMP
             onSubmit={onSubmit}
             compileHandler={compileHandler}
@@ -198,8 +198,6 @@ const AddProblem: React.FC = () => {
             compilerOutput={compilerOutput}
             compilerLoading={compilerLoading}
           />
-       
-        </div>
       </div>
     </div>
   );

@@ -119,7 +119,7 @@ const CodeEditor: React.FC = () => {
         {/* LANGUAGES SELECT  */}
         <CommonSelect 
           divClass="col-md-3"
-          onChange={(e) => themeChangeHandler(e)}
+          onChange={(e) => selectLanguageHandler(e)}
           name="languages"
           arrData={compilerList as any[]}
           selectEle="js"
