@@ -22,3 +22,8 @@ export const firstELe = {
 export const lastELe = {
   category: "Add New Category",
 };
+
+export const THEME="theme";
+export const LANGUAGES="languages";
+export const CATEGORY="category";
+export const FONTSIZE="fontSize";

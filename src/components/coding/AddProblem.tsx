@@ -3,14 +3,19 @@ import axios from "axios";
 import {
   COMPILER_URL,
   CodingEndpoints,
+  FONTSIZE,
   FONT_SIZE,
+  LANGUAGES,
+  THEME,
   firstELe,
   lastELe,
 } from "../../constant";
 import Editor from "@monaco-editor/react";
 import Themes from "./themes.json";
-import lodash from "lodash";
-import Toast from "../Navbar/Toast";
+import useCompiler from "../../hooks/useCompiler";
+import useSaveProblem from "../../hooks/useSaveProblem";
+import InputOutputCMP from "./InputOutputCMP";
+import CommonSelect from "../commonCMP/CommonSelect";
 
 interface ICategory {
   category: string;
@@ -19,35 +24,28 @@ interface ICategory {
 const AddProblem: React.FC = () => {
   const [categoryList, setCotegoryList] = useState<ICategory[]>([]);
   const [compilerList, setCompilerList] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [changeText, setChangeText] = useState({
     title: "",
     category: "",
     language: "",
     code: "",
+    input: "",
     theme: Themes[1].value,
     fontSize: FONT_SIZE[0],
   });
 
-  const onSubmit = async () => {
-    try {
-      setLoading(true);
-      const { title, category, code } = changeText;
-      const { data } = await axios.post(
-        `${CodingEndpoints.CREATE_NEW_PROBLEM}`,
-        { code, title, category }
-      );
-      if (data && data.success) {
-        return <Toast success={data.success} message={data.message} />;
-      }
-      <Toast success={data.success} message={data.message} />;
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-    setLoading(false);
-  };
+  const { compilerLoading, compilerOutput, setCompilerOutput, compileHandler } =
+    useCompiler({
+      code: changeText.code,
+      language: changeText.language,
+      input: changeText.input,
+    });
+
+  const { saveLoading, onSubmit } = useSaveProblem({
+    title: changeText.title,
+    code: changeText.code,
+    category: changeText.category,
+  });
 
   const onChangeHandler = (
     e:
@@ -57,6 +55,9 @@ const AddProblem: React.FC = () => {
   ) => {
     const { name, value } = e.target;
     if (value !== "") {
+      if (name === "languages") {
+        setCompilerOutput("");
+      }
       setChangeText((pre) => {
         return { ...pre, [name]: value };
       });
@@ -111,36 +112,25 @@ const AddProblem: React.FC = () => {
     getCategoryList(`${CodingEndpoints.PROBELM_CATEGORY}`);
   }, []);
 
-  //  console.log("==============category",changeText?.category)
-
   return (
-    <div className="container">
+    <div className="p-1">
       <div className="row mt-5">
         {/* CATEGORY  */}
-        <div className="col-md-2">
-          <select
-            id="categorySelect"
-            value={changeText.category}
-            onChange={(e) => onChangeHandler(e)}
-            className="form-control shadow-sm"
-            name="category"
-          >
-            {categoryList &&
-              categoryList.length > 0 &&
-              categoryList.map((it: { category: string }, index) => (
-                <option
-                  selected={it.category === firstELe.category}
-                  key={index}
-                  value={it.category}
-                >
-                  {lodash.upperFirst(it.category)}
-                </option>
-              ))}
-          </select>
-        </div>
+          
+          {categoryList && categoryList.length>0 && (
+              <CommonSelect 
+                divClass="col-md-2"
+                onChange={(e) => onChangeHandler(e)}
+                name="category"
+                arrData={categoryList as any[]}
+                selectEle="js"
+                from="category"
+              />
+
+            )}
 
         {/* TITLE  */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <input
             name="title"
             value={changeText.title}
@@ -152,86 +142,64 @@ const AddProblem: React.FC = () => {
         </div>
 
         {/* LANGUAGES SELECT  */}
-        <div className="col-md-2">
-          <select
-            onChange={(e) => onChangeHandler(e)}
-            className="form-control shadow-sm"
-            name="languages"
-          >
-            {compilerList &&
-              compilerList.length > 0 &&
-              compilerList.map((it: { language: string }, index) => (
-                <option
-                  selected={it.language === "js"}
-                  key={index}
-                  value={it.language}
-                >
-                  {lodash.upperCase(it.language)}
-                </option>
-              ))}
-          </select>
-        </div>
+        {compilerList && compilerList.length>0 && (
+            <CommonSelect 
+              divClass="col-md-2"
+              onChange={(e) => onChangeHandler(e)}
+              name="languages"
+              arrData={compilerList as any[]}
+              selectEle="js"
+               from={LANGUAGES}
+            />
+        )}
 
         {/* THEME SELECT    */}
-        <div className="col-md-2">
-          <select
-            onChange={(e) => onChangeHandler(e)}
-            className="form-control shadow-sm"
-            name="theme"
-          >
-            {Themes &&
-              Themes.length > 0 &&
-              Themes.map((it, index) => (
-                <option
-                  selected={it.value === changeText.theme}
-                  key={index}
-                  value={it.value}
-                >
-                  {it.name}
-                </option>
-              ))}
-          </select>
-        </div>
-
-        <div className="col-md-1">
-          <select
-            onChange={(e) => onChangeHandler(e)}
-            className="form-control shadow-sm"
-            name="fontSize"
-          >
-            {FONT_SIZE.map((it) => (
-              <option selected={it === changeText.fontSize} key={it} value={it}>
-                {it}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* SUBMIT BUTTON  */}
-        <div className="col-md-1">
-          <button className="btn btn-dark" onClick={() => onSubmit()}>
-            {" "}
-            Submit
-            {loading && (
-              <div className="spinner-grow spinner-grow-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            )}
-          </button>
-        </div>
+        <CommonSelect 
+          divClass="col-md-1"
+          onChange={(e) => onChangeHandler(e)}
+          name="theme"
+          arrData={Themes}
+          selectEle={changeText.theme}
+          from={THEME}
+        />
+         
+        {/* FONT SIZE  */}
+        <CommonSelect 
+          divClass="col-md-1"
+          onChange={(e) => onChangeHandler(e)}
+          name="fontSize"
+          arrData={FONT_SIZE}
+          selectEle={changeText.fontSize}
+          from={FONTSIZE}
+        />
       </div>
 
       {/* CODE EDITOR  */}
-      <div className="mt-5">
-        <Editor
-          height="85vh"
-          defaultLanguage={"javascript"}
-          language={changeText.language}
-          value={changeText.code}
-          theme={changeText.theme}
-          options={{ fontSize: changeText.fontSize }}
-          onChange={(val) => val && setChangeText({ ...changeText, code: val })}
-        />
+      <div className="row">
+        <div className="col-md-9">
+          <div className="mt-5">
+            <Editor
+              height="85vh"
+              defaultLanguage={"javascript"}
+              language={changeText.language}
+              value={changeText.code}
+              theme={changeText.theme}
+              options={{ fontSize: changeText.fontSize }}
+              onChange={(val) =>
+                val && setChangeText({ ...changeText, code: val })
+              }
+            />
+          </div>
+
+          <InputOutputCMP
+            onSubmit={onSubmit}
+            compileHandler={compileHandler}
+            saveLoading={saveLoading}
+            compilerOutput={compilerOutput}
+            compilerLoading={compilerLoading}
+          />
+       
+        </div>
       </div>
     </div>
   );

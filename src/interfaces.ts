@@ -4,3 +4,10 @@ export interface IProblems {
   category_id: number;
   code_id: number;
 }
+
+
+export interface ILangData {
+  code: string;
+  language: string;
+  input: string;
+}
