@@ -6,7 +6,7 @@ interface IProps {
 }
 
 const Toast: React.FC<IProps> = ({ message,success}) => {
-console.log("==============oooooooooo",message,success)
+console.log("==============oooooooooo",message,success);
   if (message !== "") {
     return (
       <div

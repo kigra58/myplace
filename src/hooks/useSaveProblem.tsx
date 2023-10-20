@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CodingEndpoints } from '../constant';
-import Toast from '../components/Navbar/Toast';
+import Toast from '../components/Toast/Toast';
 import axios from 'axios';
 
 const useSaveProblem = ({title,category,code}:{title:string;category:string;code:string,}) => {
