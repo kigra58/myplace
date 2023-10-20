@@ -36,6 +36,13 @@ const CodeEditor: React.FC = () => {
     input: "",
   });
 
+  const {compilerLoading,compilerOutput,setCompilerOutput,compileHandler}= useCompiler(list);
+  const { saveLoading, onSubmit } = useSaveProblem({
+   title: prevData.title,
+   code: list.code,
+   category: prevData.category,
+ });
+
   /**
    * GET COMPILER LIST
    * @param url
@@ -51,7 +58,6 @@ const CodeEditor: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
- const {compilerLoading,compilerOutput,setCompilerOutput,compileHandler}= useCompiler(list);
 
   /**
    * LANGUAGE HANDLER
@@ -98,11 +104,6 @@ const CodeEditor: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
-  const {saveLoading,onSubmit}=useSaveProblem({
-    title:"",
-    code:"",
-    category:""
-   });
 
   useEffect(() => {
     if (COMPILER_URL) {
@@ -174,6 +175,7 @@ const CodeEditor: React.FC = () => {
            compilerLoading={compilerLoading}
            compilerOutput={compilerOutput}
            onSubmit={onSubmit}
+           problemId={params.id}
           />
       </div>
     </div>
