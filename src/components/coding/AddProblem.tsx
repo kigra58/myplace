@@ -112,24 +112,20 @@ const AddProblem: React.FC = () => {
     getCategoryList(`${CodingEndpoints.PROBELM_CATEGORY}`);
   }, []);
 
-
-  console.log("==============changeText",changeText)
-
   return (
     <div className="p-1">
       <div className="row mt-5">
-          {/* CATEGORY  */}
-          {categoryList && categoryList.length>0 && (
-              <CommonSelect 
-                divClass="col-md-2"
-                onChange={(e) => onChangeHandler(e)}
-                name="category"
-                arrData={categoryList as any[]}
-                selectEle="js"
-                from="category"
-              />
-
-          )}
+        {/* CATEGORY  */}
+        {categoryList && categoryList.length > 0 && (
+          <CommonSelect
+            divClass="col-md-2"
+            onChange={(e) => onChangeHandler(e)}
+            name="category"
+            arrData={categoryList as any[]}
+            selectEle="js"
+            from="category"
+          />
+        )}
 
         {/* TITLE  */}
         <div className="col-md-3">
@@ -144,19 +140,19 @@ const AddProblem: React.FC = () => {
         </div>
 
         {/* LANGUAGES SELECT  */}
-        {compilerList && compilerList.length>0 && (
-            <CommonSelect 
-              divClass="col-md-2"
-              onChange={(e) => onChangeHandler(e)}
-              name="language"
-              arrData={compilerList as any[]}
-              selectEle="js"
-               from={LANGUAGES}
-            />
+        {compilerList && compilerList.length > 0 && (
+          <CommonSelect
+            divClass="col-md-2"
+            onChange={(e) => onChangeHandler(e)}
+            name="language"
+            arrData={compilerList as any[]}
+            selectEle="js"
+            from={LANGUAGES}
+          />
         )}
 
         {/* THEME SELECT    */}
-        <CommonSelect 
+        <CommonSelect
           divClass="col-md-1"
           onChange={(e) => onChangeHandler(e)}
           name="theme"
@@ -164,9 +160,9 @@ const AddProblem: React.FC = () => {
           selectEle={changeText.theme}
           from={THEME}
         />
-         
+
         {/* FONT SIZE  */}
-        <CommonSelect 
+        <CommonSelect
           divClass="col-md-1"
           onChange={(e) => onChangeHandler(e)}
           name="fontSize"
@@ -179,25 +175,25 @@ const AddProblem: React.FC = () => {
       {/* CODE EDITOR  */}
       <div className="row p-2">
         <div className="col-md-9">
-            <Editor
-              height="85vh"
-              defaultLanguage={"javascript"}
-              language={changeText.language}
-              value={changeText.code}
-              theme={changeText.theme}
-              options={{ fontSize: changeText.fontSize }}
-              onChange={(val) =>
-                val && setChangeText({ ...changeText, code: val })
-              }
-            />
-        </div>
-          <InputOutputCMP
-            onSubmit={onSubmit}
-            compileHandler={compileHandler}
-            saveLoading={saveLoading}
-            compilerOutput={compilerOutput}
-            compilerLoading={compilerLoading}
+          <Editor
+            height="85vh"
+            defaultLanguage={"javascript"}
+            language={changeText.language}
+            value={changeText.code}
+            theme={changeText.theme}
+            options={{ fontSize: changeText.fontSize }}
+            onChange={(val) =>
+              val && setChangeText({ ...changeText, code: val })
+            }
           />
+        </div>
+        <InputOutputCMP
+          onSubmit={onSubmit}
+          compileHandler={compileHandler}
+          saveLoading={saveLoading}
+          compilerOutput={compilerOutput}
+          compilerLoading={compilerLoading}
+        />
       </div>
     </div>
   );

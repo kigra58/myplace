@@ -5,7 +5,7 @@ interface IProp {
   compileHandler: () => void;
   compilerLoading: boolean;
   saveLoading: boolean;
-  problemId?:string;
+  problemId?: string;
   onSubmit: (id?: string) => void;
 }
 
@@ -15,19 +15,19 @@ const InputOutputCMP: React.FC<IProp> = ({
   compilerLoading,
   saveLoading,
   onSubmit,
-  problemId
+  problemId,
 }) => {
   return (
     <div className="col-md-3 ">
       <textarea
-        style={{ height: 230 }}
+        style={{ height: 227 }}
         className="form-control shadow-sm"
         maxLength={10}
         placeholder="INPUT"
       />{" "}
       <br />
       <textarea
-        style={{ height: 250 }}
+        style={{ height: 240 }}
         className="form-control shadow-sm"
         maxLength={10}
         placeholder="OUTPUT"
@@ -45,9 +45,9 @@ const InputOutputCMP: React.FC<IProp> = ({
       </button>
       {/* SAVE CODE  */}
       <button
-        className="btn btn-dark mx-5"
+        className="btn btn-dark mx-3"
         type="button"
-        onClick={() => problemId ? onSubmit(problemId):onSubmit()}
+        onClick={() => (problemId ? onSubmit(problemId) : onSubmit())}
       >
         SAVE CODE
         {saveLoading && (
