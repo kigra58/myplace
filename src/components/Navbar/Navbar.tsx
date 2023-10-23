@@ -26,11 +26,14 @@ const Navbar: React.FC = () => {
             <NavLink className="nav-link " aria-current="page" to={Endpoints.PROBLEMS} >
               Coding Problems
             </NavLink>
-            {/* <NavLink className="nav-link " to={Endpoints.COMPILER} >
-              Compiler
-            </NavLink> */}
             <NavLink className="nav-link " to={Endpoints.CREATE_NEW_PROBLEM} >
                Add Problem
+            </NavLink>
+            <NavLink className="nav-link " to={Endpoints.CREATE_NEW_MCQ} >
+              Add MCQ
+            </NavLink>
+            <NavLink className="nav-link " to={Endpoints.MCQ} >
+              MCQ'S
             </NavLink>
           </div>
         </div>

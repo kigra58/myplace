@@ -6,11 +6,11 @@ interface IProps {
   success: boolean;
 }
 
-const Toast1: React.FC<IProps> = ({ message, success }) => {
-  // console.log("==============oooooooooo", message, success);
+const ToastMsg: React.FC<IProps> = ({ message, success }) => {
+  console.log("==============oooooooooo", message, success);
   if (message !== "") {
     return (
-      <Toast delay={5000} bg={`${success ? "primary" : "danger"} text-white`}>
+      <Toast delay={500} bg={`${success ? "primary" : "danger"} text-white`}>
         {/* <Toast.Header>
           <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
           <strong className="me-auto">Bootstrap</strong>
@@ -24,4 +24,4 @@ const Toast1: React.FC<IProps> = ({ message, success }) => {
   }
 };
 
-export default Toast1;
+export default ToastMsg;

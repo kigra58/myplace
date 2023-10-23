@@ -5,6 +5,8 @@ import CodeEditor from "./components/coding/CodeEditor";
 import ProblemList from "./components/coding/ProblemList";
 import Navbar from "./components/Navbar/Navbar";
 import CreateNewProblem from "./components/coding/AddProblem";
+import AddMCQ from "./components/coding/AddMCQ";
+import MCQ from "./components/coding/MCQ";
 
 
 const App: React.FC = () => {
@@ -17,6 +19,8 @@ const App: React.FC = () => {
           <Route path={Endpoints.PROBLEMS} element={<ProblemList />} />
           <Route path={Endpoints.COMPILER} element={<CodeEditor />} />
           <Route path={Endpoints.CREATE_NEW_PROBLEM} element={<CreateNewProblem />} />
+          <Route path={Endpoints.CREATE_NEW_MCQ} element={<AddMCQ />} />
+          <Route path={Endpoints.MCQ} element={<MCQ />} />
         </Routes>
       </Router>
 
