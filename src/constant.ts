@@ -10,14 +10,20 @@ export const Endpoints = {
 
 export const CodingEndpoints = {
   CREATE_NEW_PROBLEM: BASE_URL?.concat("coding"),
-  CREATE_NEW_MCQ: BASE_URL?.concat("coding").concat(Endpoints.CREATE_NEW_MCQ),
   PROBLEMS: BASE_URL?.concat("coding").concat(Endpoints.PROBLEMS),
-  MCQ_LIST: BASE_URL?.concat("coding").concat(Endpoints.MCQ),
   PROBLEM_DETAILS: BASE_URL?.concat("coding/problem-details/:id"),
   PROBELM_CATEGORY: BASE_URL?.concat("coding/problem-category"),
-  SUBMIT_SOLUTION: BASE_URL?.concat("coding").concat(Endpoints.SUBMIT_SOLUTION),
-  GET_USER_SOLUTION: BASE_URL?.concat("coding/user-solution")
+ 
 };
+
+export const TestEndpoints={
+  SUBMIT_SOLUTION: BASE_URL?.concat("test").concat(Endpoints.SUBMIT_SOLUTION),
+  GET_USER_SOLUTION: BASE_URL?.concat("test/user-solution"),
+  MCQ_LIST: BASE_URL?.concat("test").concat(Endpoints.MCQ),
+  CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(Endpoints.CREATE_NEW_MCQ),
+
+
+}
 
 export const COMPILER_URL = "https://api.codex.jaagrav.in";
 export const ADD_PROBLEM = "addProblem";

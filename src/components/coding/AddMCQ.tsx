@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { CodingEndpoints } from "../../constant";
+import { TestEndpoints } from "../../constant";
 
 const AddMCQ: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +57,7 @@ const AddMCQ: React.FC = () => {
         tempArr.push(changeText.option1);
         tempArr.push(changeText.option2);
         tempArr.push(changeText.option3);
-        const { data } = await axios.post(`${CodingEndpoints.CREATE_NEW_MCQ}`, {
+        const { data } = await axios.post(`${TestEndpoints.CREATE_NEW_MCQ}`, {
           question: changeText.question,
           answer: changeText.answer,
           category: changeText.category,

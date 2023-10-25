@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CodingEndpoints } from "../../constant";
+import {  TestEndpoints, } from "../../constant";
 import axios from "axios";
 
 
@@ -39,7 +39,7 @@ const MCQ: React.FC = () => {
 
   const postData=async()=>{
     try {
-      const {data}=await axios.post(`${CodingEndpoints.SUBMIT_SOLUTION}`,{
+      const {data}=await axios.post(`${TestEndpoints.SUBMIT_SOLUTION}`,{
         userId:"101",
         userSolution
       });
@@ -54,7 +54,7 @@ const MCQ: React.FC = () => {
   const getMCQ = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${CodingEndpoints.MCQ_LIST}`);
+      const { data } = await axios.get(`${TestEndpoints.MCQ_LIST}`);
       if (data && data.success) {
         setMCQList(data.data);
       }
@@ -67,7 +67,7 @@ const MCQ: React.FC = () => {
 
   const getSolution=async()=>{
      try {
-      const {data}=await axios.get(`${CodingEndpoints.GET_USER_SOLUTION}`);
+      const {data}=await axios.get(`${TestEndpoints.GET_USER_SOLUTION}`);
       if(data && data.success){
          console.log("==============response",data.data)
       }
