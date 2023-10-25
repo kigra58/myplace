@@ -11,10 +11,6 @@ interface ISolution{
 const MCQ: React.FC = () => {
   const [mcqList, setMCQList] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [changeText,setChangeText]=useState({
-  //   questionId:"",
-  //   answer:""
-  // });
   const [userSolution,setUserSolution]=useState<ISolution[]>([]);
 
   const onChangeHandler=(e: React.ChangeEvent<HTMLInputElement>,questionId:string)=>{
@@ -22,7 +18,6 @@ const MCQ: React.FC = () => {
     const checkId = userSolution.find(i => i.questionId === questionId);
     if(checkId){
      // update solution
-      console.log("=================update")
       const updateAnswer = userSolution.filter((item) => {
         if (item.questionId === questionId){
           item.answer = value;
@@ -32,15 +27,14 @@ const MCQ: React.FC = () => {
       setUserSolution(updateAnswer);
     }else{ 
      // insert solution
-     console.log("==================insert")
-     setUserSolution([...userSolution,{questionId,answer:value}])
+     setUserSolution([...userSolution,{questionId,answer:value}]);
     }    
   };
 
   const postData=async()=>{
     try {
       const {data}=await axios.post(`${TestEndpoints.SUBMIT_SOLUTION}`,{
-        userId:"101",
+        userId:"6538e443b082f6f5250b7bba",
         userSolution
       });
       if(data && data.success){
