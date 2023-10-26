@@ -14,55 +14,57 @@ import AddMCQ from "../components/coding/AddMCQ";
 import MCQ from "../components/coding/MCQ";
 import Home from "../components/auth/AuthPage";
 
-interface Props {
-  component: React.ComponentType;
-}
+// interface Props {
+//   component: React.ComponentType;
+// }
 
-const ProtectWithNavbar: React.FC<Props> = ({ component }) => {
-  return (
-    <>
-      <Navbar />
-      <ProtectedRoutes component={component} />
-    </>
-  );
-};
+// const ProtectWithNavbar: React.FC<Props> = ({ component }) => {
+//   return (
+//     <>
+//       <ProtectedRoutes component={component} />
+//     </>
+//   );
+// };
 
 const PublicRoutes: React.FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authData);
   console.log("===============authData", authData);
 
   return (
-    <Routes>
-      <Route
-        path={ROUTES.HOME}
-        element={<ProtectWithNavbar component={Home} />}
-      />
-      <Route
-        path={ROUTES.CREATE_NEW_MCQ}
-        element={<ProtectWithNavbar component={AddMCQ} />}
-      />
-      <Route
-        path={ROUTES.PROBLEMS}
-        element={<ProtectWithNavbar component={ProblemList} />}
-      />
-      <Route
-        path={ROUTES.MCQ}
-        element={<ProtectWithNavbar component={MCQ} />}
-      />
-      <Route
-        path={ROUTES.CREATE_NEW_PROBLEM}
-        element={<ProtectWithNavbar component={AddProblem} />}
-      />
-      <Route
-        path={ROUTES.COMPILER}
-        element={<ProtectWithNavbar component={CodeEditor} />}
-      />
+    <>
+      <Navbar />
+      <Routes>
+        <Route
+          path={ROUTES.HOME}
+          element={<ProtectedRoutes component={Home} />}
+        />
+        <Route
+          path={ROUTES.CREATE_NEW_MCQ}
+          element={<ProtectedRoutes component={AddMCQ} />}
+        />
+        <Route
+          path={ROUTES.PROBLEMS}
+          element={<ProtectedRoutes component={ProblemList} />}
+        />
+        <Route
+          path={ROUTES.MCQ}
+          element={<ProtectedRoutes component={MCQ} />}
+        />
+        <Route
+          path={ROUTES.CREATE_NEW_PROBLEM}
+          element={<ProtectedRoutes component={AddProblem} />}
+        />
+        <Route
+          path={ROUTES.COMPILER}
+          element={<ProtectedRoutes component={CodeEditor} />}
+        />
 
-      <Route
-        path={ROUTES.HOME}
-        element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
-      />
-    </Routes>
+        <Route
+          path={ROUTES.HOME}
+          element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
+        />
+      </Routes>
+    </>
   );
 };
 
