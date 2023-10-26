@@ -1,10 +1,15 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
 import { TestEndpoints } from "../../constant";
+import { useSelector} from "react-redux";
+import { RootState } from "../../rtk/store";
+import useForm from "../../hooks/useForm";
 
 const AddMCQ: React.FC = () => {
+  const authData=useSelector((state:RootState)=>state.auth.authData);
+  console.log("===============authdataaaaaa",authData)
   const [loading, setLoading] = useState(false);
-  const [changeText, setChnageText] = useState({
+  const {formData:changeText,onChangeHandler,setFormData}=useForm({
     question: "",
     answer: "",
     category: "",
@@ -12,23 +17,8 @@ const AddMCQ: React.FC = () => {
     option1: "",
     option2: "",
     option3: "",
-  });
+});
 
-  /**
-   * ON CHANGE  HANDLER
-   * @param e
-   */
-  const onChangeHandler = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { value, name } = e.target;
-    setChnageText((prev) => {
-      return { ...prev, [name]: value };
-    });
-
-  };
 
   //   const addNewInput=()=>{
   //     const inputEle=document.getElementById("addInputDiv");
@@ -64,7 +54,7 @@ const AddMCQ: React.FC = () => {
           options: tempArr,
         });
         if (data && data.success) {
-          setChnageText({
+          setFormData({
             question: "",
             answer: "",
             category: "",
@@ -198,7 +188,7 @@ const AddMCQ: React.FC = () => {
         onClick={() => onSubmitHandler()}
         type="button"
       >
-        Submit{" "}
+        Submit
         {loading && (
           <div className="spinner-grow spinner-grow-sm" role="status">
             <span className="visually-hidden">Loading...</span>

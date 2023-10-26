@@ -30,6 +30,7 @@ const CodeEditor: React.FC = () => {
     title: "",
     category: "",
   });
+  
   const [list, setList] = useState({
     code: "",
     language: "js",
@@ -77,7 +78,7 @@ const CodeEditor: React.FC = () => {
    */
   const themeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {value,name}=e.target;
-    if (value!=="") {
+    if (value) {
       setThemeState((pre)=>{
         return {...pre,[name]:value}
       })
@@ -88,7 +89,7 @@ const CodeEditor: React.FC = () => {
    * GET PROBLEMS DETAILS
    * @param problemId
    */
-  const getProblemDetails = (problemId: string) => {
+  const getProblemDetails = (problemId: string):void => {
     axios
       .get(`${CodingEndpoints.PROBLEM_DETAILS?.replace(":id", problemId)}`)
       .then(({ data }) => {

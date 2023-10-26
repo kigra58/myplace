@@ -24,7 +24,7 @@ const InputOutputCMP: React.FC<IProp> = ({
         className="form-control shadow-sm"
         maxLength={10}
         placeholder="INPUT"
-      />{" "}
+      />
       <br />
       <textarea
         style={{ height: 240 }}

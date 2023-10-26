@@ -1,5 +1,6 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
-export const Endpoints = {
+export const ROUTES = {
+  HOME:"/",
   PROBLEMS: "/problems",
   MCQ: "/mcq-list",
   CREATE_NEW_PROBLEM: "/create-new-problem",
@@ -10,19 +11,24 @@ export const Endpoints = {
 
 export const CodingEndpoints = {
   CREATE_NEW_PROBLEM: BASE_URL?.concat("coding"),
-  PROBLEMS: BASE_URL?.concat("coding").concat(Endpoints.PROBLEMS),
+  PROBLEMS: BASE_URL?.concat("coding").concat(ROUTES.PROBLEMS),
   PROBLEM_DETAILS: BASE_URL?.concat("coding/problem-details/:id"),
   PROBELM_CATEGORY: BASE_URL?.concat("coding/problem-category"),
  
 };
 
+export const AuthEndpoints = {
+  LOGIN: BASE_URL?.concat("user/login"),
+  SIGNUP: BASE_URL?.concat("user/signup")
+};
+
+
+
 export const TestEndpoints={
-  SUBMIT_SOLUTION: BASE_URL?.concat("test").concat(Endpoints.SUBMIT_SOLUTION),
+  SUBMIT_SOLUTION: BASE_URL?.concat("test").concat(ROUTES.SUBMIT_SOLUTION),
   GET_USER_SOLUTION: BASE_URL?.concat("test/user-solution"),
-  MCQ_LIST: BASE_URL?.concat("test").concat(Endpoints.MCQ),
-  CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(Endpoints.CREATE_NEW_MCQ),
-
-
+  MCQ_LIST: BASE_URL?.concat("test").concat(ROUTES.MCQ),
+  CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(ROUTES.CREATE_NEW_MCQ),
 }
 
 export const COMPILER_URL = "https://api.codex.jaagrav.in";

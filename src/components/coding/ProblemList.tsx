@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CodingEndpoints, Endpoints } from "../../constant";
+import { CodingEndpoints, ROUTES } from "../../constant";
 import axios from "axios";
 import lodash from "lodash"
 
@@ -48,7 +48,7 @@ const ProblemList: React.FC = () => {
                     it.problems.map((item: { title: string ,code:string,_id:string}, ind: number) => {
                       return (
                         <li key={ind} className="list-group-item shadow"  style={{cursor: "pointer"}}
-                        onClick={()=>navigate(Endpoints.COMPILER.replace(":id",item._id),
+                        onClick={()=>navigate(ROUTES.COMPILER.replace(":id",item._id),
                         {state:{code:item.code}})}
                         >
                           {item?.title}

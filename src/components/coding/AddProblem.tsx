@@ -54,7 +54,7 @@ const AddProblem: React.FC = () => {
       | any
   ) => {
     const { name, value } = e.target;
-    if (value !== "") {
+    if (value) {
       if (name === "language") {
         setCompilerOutput("");
       }

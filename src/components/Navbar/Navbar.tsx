@@ -1,12 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Endpoints } from "../../constant";
+import { ROUTES } from "../../constant";
 
 const Navbar: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="#">
+        <NavLink className="navbar-brand" to={ROUTES.HOME}>
         <img src={`${process.env.PUBLIC_URL}/logo192.png`} alt="" width="30" 
            height="24" className="d-inline-block align-text-top"/>
         </NavLink>
@@ -23,18 +23,19 @@ const Navbar: React.FC = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink className="nav-link " aria-current="page" to={Endpoints.PROBLEMS} >
+            <NavLink className="nav-link " aria-current="page" to={ROUTES.PROBLEMS} >
               Coding Problems
             </NavLink>
-            <NavLink className="nav-link " to={Endpoints.CREATE_NEW_PROBLEM} >
+            <NavLink className="nav-link " to={ROUTES.CREATE_NEW_PROBLEM} >
                Add Problem
             </NavLink>
-            <NavLink className="nav-link " to={Endpoints.CREATE_NEW_MCQ} >
+            <NavLink className="nav-link " to={ROUTES.CREATE_NEW_MCQ} >
               Add MCQ
             </NavLink>
-            <NavLink className="nav-link " to={Endpoints.MCQ} >
+            <NavLink className="nav-link " to={ROUTES.MCQ} >
               MCQ'S
             </NavLink>
+       
           </div>
         </div>
       </div>
