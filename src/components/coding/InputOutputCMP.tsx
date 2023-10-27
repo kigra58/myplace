@@ -11,11 +11,11 @@ interface IProp {
 
 const InputOutputCMP: React.FC<IProp> = ({
   compilerOutput,
-  compileHandler,
   compilerLoading,
   saveLoading,
-  onSubmit,
   problemId,
+  compileHandler,
+  onSubmit,
 }) => {
   return (
     <div className="col-md-3 ">

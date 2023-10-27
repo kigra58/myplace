@@ -40,9 +40,9 @@ const CodeEditor: React.FC = () => {
   const {
     compilerLoading,
     compilerOutput,
+    compilerData,
     setCompilerOutput,
     compileHandler,
-    compilerData,
     setCompilerData,
   } = useCompiler({
     code: "",

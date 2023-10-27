@@ -14,7 +14,7 @@ const useSaveProblem = ({title,category,code}:{title:string;category:string;code
         { code, title, category,problemId }
       );
       if (data && data.success) {
-        console.log("=====================,data",data.success,data.message)
+        // console.log("=====================,data",data.success,data.message)
         return <Toast success={data.success} message={data.message} />;
       }
       setSaveLoading(false);

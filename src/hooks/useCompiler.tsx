@@ -37,12 +37,12 @@ const useCompiler = (propsData: IProps) => {
   };
 
   return {
-    compilerLoading,
-    compilerOutput,
     setCompilerOutput,
     compileHandler,
-    compilerData,
     setCompilerData,
+    compilerLoading,
+    compilerOutput,
+    compilerData,
   };
 };
 
