@@ -12,9 +12,9 @@ const useFeth = (url:string) => {
   const getList = (url: string) => {
     setLoading(true);
     axios.get(url).then(({ data }) => {
-        // console.log("===================Responseeeeee",data)
+        console.log("===================Responseeeeee",data)
         if (data && data.status) {
-          setData(data);
+          setData(data.data);
         }
       })
       .catch((err) => {
@@ -29,7 +29,7 @@ const useFeth = (url:string) => {
     if(url!==""){
         getList(url)
     }
-  },[url])
+  },[url]);
   return {data,error,loading}
 }
 
