@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TestEndpoints } from "../../constant";
 import { useSelector} from "react-redux";
-import { RootState } from "../../rtk/store";
-import useForm from "../../hooks/useForm";
+import { RootState } from "../../../rtk/store";
+import useForm from "../../../hooks/useForm";
+import { TestEndpoints } from "../../../routes/routes";
+
 
 const AddMCQ: React.FC = () => {
   const authData=useSelector((state:RootState)=>state.auth.authData);

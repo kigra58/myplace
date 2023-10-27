@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  COMPILER_URL,
-  CodingEndpoints,
-  FONTSIZE,
-  FONT_SIZE,
-  LANGUAGES,
-  THEME,
-} from "../../constant";
+
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import lodash from "lodash";
 import Themes from "./themes.json";
-import useCompiler from "../../hooks/useCompiler";
+
+import { COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME } from "../../../helper/constant";
+import { CodingEndpoints } from "../../../routes/routes";
+
 import InputOutputCMP from "./InputOutputCMP";
-import useSaveProblem from "../../hooks/useSaveProblem";
-import CommonSelect from "../commonCMP/CommonSelect";
-import useForm from "../../hooks/useForm";
+import useForm from "../../../hooks/useForm";
+import useCompiler from "../../../hooks/useCompiler";
+import useSaveProblem from "../../../hooks/useSaveProblem";
+import CommonSelect from "../../commonCMP/CommonSelect";
+
+
+
+
 
 interface ICompiler {
   info: string;

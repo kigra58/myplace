@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CodingEndpoints, ROUTES } from "../../constant";
 import axios from "axios";
 import lodash from "lodash"
+import { useNavigate } from "react-router-dom";
+import { CodingEndpoints, ROUTES } from "../../../routes/routes";
+
 
 const ProblemList: React.FC = () => {
   const [listt, setListt] = useState<any[]>();

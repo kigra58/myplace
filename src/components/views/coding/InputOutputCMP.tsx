@@ -2,10 +2,10 @@ import React from "react";
 
 interface IProp {
   compilerOutput: string;
-  compileHandler: () => void;
-  compilerLoading: boolean;
   saveLoading: boolean;
   problemId?: string;
+  compilerLoading: boolean;
+  compileHandler: () => void;
   onSubmit: (id?: string) => void;
 }
 

@@ -30,25 +30,22 @@ export const AuthEndpoints = {
 
 
 
+export const CompanyEndpoints = {
+  COMPANY_DASHBOARD: BASE_URL?.concat("company").concat(ROUTES.COMPANY_DASHBOARD),
+};
+
+
+export const StudentEndpoints = {
+  STUDENT_DASHBOARD: BASE_URL?.concat("test").concat(ROUTES.STUDENT_DASHBOARD),
+  TEST_LIST: BASE_URL?.concat("test").concat(ROUTES.TEST_LIST),
+  TEST_DEATILS: BASE_URL?.concat("test").concat(ROUTES.TEST_DETAILS),
+};
+
+
+
 export const TestEndpoints={
   SUBMIT_SOLUTION: BASE_URL?.concat("test").concat(ROUTES.SUBMIT_SOLUTION),
   GET_USER_SOLUTION: BASE_URL?.concat("test/user-solution"),
   MCQ_LIST: BASE_URL?.concat("test").concat(ROUTES.MCQ),
   CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(ROUTES.CREATE_NEW_MCQ),
 }
-
-export const COMPILER_URL = "https://api.codex.jaagrav.in";
-export const ADD_PROBLEM = "addProblem";
-export const FONT_SIZE = [15, 16, 17, 18, 19, 20];
-
-export const firstELe = {
-  category: "Select Category",
-};
-export const lastELe = {
-  category: "Add New Category",
-};
-
-export const THEME="theme";
-export const LANGUAGES="languages";
-export const CATEGORY="category";
-export const FONTSIZE="fontSize";

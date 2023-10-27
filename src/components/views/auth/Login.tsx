@@ -1,9 +1,11 @@
 import React from "react";
-import { AuthEndpoints } from "../../constant";
 import axios from "axios";
-import useForm from "../../hooks/useForm";
+
 import { useDispatch } from "react-redux";
-import { login } from "../../rtk/reducer";
+import useForm from "../../../hooks/useForm";
+import { AuthEndpoints } from "../../../routes/routes";
+import { login } from "../../../rtk/reducer";
+
 
 
 const Login: React.FC = () => {

@@ -2,7 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import { RootState } from '../rtk/store';
 import { Navigate } from 'react-router-dom';
-import { ROUTES } from '../constant';
+import { ROUTES } from './routes';
+
 
 interface Props {
     component: React.ComponentType;

@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  COMPILER_URL,
-  CodingEndpoints,
-  FONTSIZE,
-  FONT_SIZE,
-  LANGUAGES,
-  THEME,
-  firstELe,
-  lastELe,
-} from "../../constant";
+
 import Editor from "@monaco-editor/react";
 import Themes from "./themes.json";
-import useCompiler from "../../hooks/useCompiler";
-import useSaveProblem from "../../hooks/useSaveProblem";
+import { COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME, firstELe, lastELe } from "../../../helper/constant";
+import useCompiler from "../../../hooks/useCompiler";
+import useSaveProblem from "../../../hooks/useSaveProblem";
+import { CodingEndpoints } from "../../../routes/routes";
+import CommonSelect from "../../commonCMP/CommonSelect";
 import InputOutputCMP from "./InputOutputCMP";
-import CommonSelect from "../commonCMP/CommonSelect";
+
 
 interface ICategory {
   category: string;

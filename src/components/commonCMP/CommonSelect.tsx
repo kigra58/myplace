@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import React from "react";
-import { CATEGORY, FONTSIZE, LANGUAGES, THEME } from "../../constant";
+import { CATEGORY, FONTSIZE, LANGUAGES, THEME } from "../../helper/constant";
+
 
 interface IIterator {
   name: string;

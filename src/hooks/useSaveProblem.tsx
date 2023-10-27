@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { CodingEndpoints } from '../constant';
-
 import axios from 'axios';
 import Toast from '../components/commonCMP/Toast';
+import { CodingEndpoints } from '../routes/routes';
 
 const useSaveProblem = ({title,category,code}:{title:string;category:string;code:string,}) => {
   const [saveLoading,setSaveLoading]=useState(false);

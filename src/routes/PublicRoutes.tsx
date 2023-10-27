@@ -1,22 +1,23 @@
 import React from "react";
 import { Navbar } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ROUTES } from "../constant";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../rtk/store";
+import { ROUTES } from "./routes";
 
 import ProtectedRoutes from "./ProtectedRoutes";
-import ProblemList from "../components/coding/ProblemList";
-import AddProblem from "../components/coding/AddProblem";
-import CodeEditor from "../components/coding/CodeEditor";
-import AuthPage from "../components/auth/AuthPage";
-import AddMCQ from "../components/coding/AddMCQ";
-import MCQ from "../components/coding/MCQ";
-import Home from "../components/auth/AuthPage";
-import AddBlog from "../components/blog/AddBlog";
-import BlogList from "../components/blog/BlogList";
-import TestDetails from "../components/userTest/TestDetails";
-import TestList from "../components/userTest/TestList";
+import AddProblem from "../components/views/coding/AddProblem";
+import CodeEditor from "../components/views/coding/CodeEditor";
+import AddMCQ from "../components/views/coding/AddMCQ";
+import MCQ from "../components/views/coding/MCQ";
+import ProblemList from "../components/views/coding/ProblemList";
+import TestList from "../components/views/userTest/TestList";
+import Home from "../components/views/auth/AuthPage";
+import TestDetails from "../components/views/userTest/TestDetails";
+import AddBlog from "../components/views/blog/AddBlog";
+import BlogList from "../components/views/blog/BlogList";
+import AuthPage from "../components/views/auth/AuthPage";
 
 // interface Props {
 //   component: React.ComponentType;
@@ -87,7 +88,6 @@ const PublicRoutes: React.FC = () => {
           path={ROUTES.HOME}
           element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
         />
-
 
       </Routes>
     </>

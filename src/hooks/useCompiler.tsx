@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { COMPILER_URL } from "../constant";
+import { COMPILER_URL } from "../helper/constant";
+
 
 interface IProps {
   code: string;

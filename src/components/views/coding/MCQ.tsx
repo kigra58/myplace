@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {  TestEndpoints, } from "../../constant";
 import axios from "axios";
+import { TestEndpoints } from "../../../routes/routes";
+
 
 
 interface ISolution{

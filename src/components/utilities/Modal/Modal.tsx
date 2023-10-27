@@ -1,5 +1,6 @@
 import React from 'react'
-import { ADD_PROBLEM } from '../../constant';
+import { ADD_PROBLEM } from '../../../helper/constant';
+
 
 interface IProps{
     from:string;
