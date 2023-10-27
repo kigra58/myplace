@@ -13,6 +13,10 @@ import AuthPage from "../components/auth/AuthPage";
 import AddMCQ from "../components/coding/AddMCQ";
 import MCQ from "../components/coding/MCQ";
 import Home from "../components/auth/AuthPage";
+import AddBlog from "../components/blog/AddBlog";
+import BlogList from "../components/blog/BlogList";
+import TestDetails from "../components/userTest/TestDetails";
+import TestList from "../components/userTest/TestList";
 
 // interface Props {
 //   component: React.ComponentType;
@@ -60,9 +64,31 @@ const PublicRoutes: React.FC = () => {
         />
 
         <Route
+          path={ROUTES.ADD_BLOG}
+          element={<ProtectedRoutes component={AddBlog} />}
+        />
+
+        <Route
+          path={ROUTES.BLOG_LIST}
+          element={<ProtectedRoutes component={BlogList} />}
+        />
+
+        <Route
+          path={ROUTES.TEST_DETAILS}
+          element={<ProtectedRoutes component={TestDetails} />}
+        />
+
+        <Route
+          path={ROUTES.TEST_LIST}
+          element={<ProtectedRoutes component={TestList} />}
+        />
+
+        <Route
           path={ROUTES.HOME}
           element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
         />
+
+
       </Routes>
     </>
   );

@@ -6,7 +6,13 @@ export const ROUTES = {
   CREATE_NEW_PROBLEM: "/create-new-problem",
   CREATE_NEW_MCQ: "/create-mcq",
   COMPILER: "/compiler/:id",
-  SUBMIT_SOLUTION:"/submit-solution"
+  SUBMIT_SOLUTION:"/submit-solution",
+  ADD_BLOG:"/create-blog",
+  BLOG_LIST:"/blog-list",
+  STUDENT_DASHBOARD:"/student-dashboard",
+  COMPANY_DASHBOARD:"/company-dashboard",
+  TEST_DETAILS:"/test-deatils",
+  TEST_LIST:"/test-list"
 };
 
 export const CodingEndpoints = {

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { COMPILER_URL, CodingEndpoints, FONTSIZE, FONT_SIZE, LANGUAGES, THEME } from "../../constant";
+import {
+  COMPILER_URL,
+  CodingEndpoints,
+  FONTSIZE,
+  FONT_SIZE,
+  LANGUAGES,
+  THEME,
+} from "../../constant";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import lodash from "lodash";
@@ -9,8 +16,7 @@ import useCompiler from "../../hooks/useCompiler";
 import InputOutputCMP from "./InputOutputCMP";
 import useSaveProblem from "../../hooks/useSaveProblem";
 import CommonSelect from "../commonCMP/CommonSelect";
-
-
+import useForm from "../../hooks/useForm";
 
 interface ICompiler {
   info: string;
@@ -21,28 +27,34 @@ const CodeEditor: React.FC = () => {
   const params = useParams();
   const [compilerList, setCompilerList] = useState<ICompiler[]>();
   const [changeLang, setChangeLang] = useState("");
-  const [themeState,setThemeState]=useState({
-    theme:Themes[1].value,
-    fontSize:FONT_SIZE[0],
-  });
-
   const [prevData, setPrevData] = useState({
     title: "",
     category: "",
   });
-  
-  const [list, setList] = useState({
+
+  const {formData:themeState,onChangeHandler:themeChangeHandler}=useForm({
+    theme: Themes[1].value,
+    fontSize: FONT_SIZE[0],
+  });
+
+  const {
+    compilerLoading,
+    compilerOutput,
+    setCompilerOutput,
+    compileHandler,
+    compilerData,
+    setCompilerData,
+  } = useCompiler({
     code: "",
     language: "js",
     input: "",
   });
 
-  const {compilerLoading,compilerOutput,setCompilerOutput,compileHandler}= useCompiler(list);
   const { saveLoading, onSubmit } = useSaveProblem({
-   title: prevData.title,
-   code: list.code,
-   category: prevData.category,
- });
+    title: prevData.title,
+    code: compilerData.code,
+    category: prevData.category,
+  });
 
   /**
    * GET COMPILER LIST
@@ -59,42 +71,30 @@ const CodeEditor: React.FC = () => {
       .catch((err) => console.error(err));
   };
 
-
   /**
    * LANGUAGE HANDLER
    * @param e
    */
   const selectLanguageHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value !== "") {
-      setChangeLang(e.target.value);
-      setList({ ...list, language: e.target.value, input: "" });
+    const {value}=e.target
+    if (value) {
+      setChangeLang(value);
+      setCompilerData({ ...compilerData, language: value, input: "" });
       setCompilerOutput("");
     }
   };
 
-  /**
-   * THEME HANDLER
-   * @param e
-   */
-  const themeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const {value,name}=e.target;
-    if (value) {
-      setThemeState((pre)=>{
-        return {...pre,[name]:value}
-      })
-    }
-  };
 
   /**
    * GET PROBLEMS DETAILS
    * @param problemId
    */
-  const getProblemDetails = (problemId: string):void => {
+  const getProblemDetails = (problemId: string): void => {
     axios
       .get(`${CodingEndpoints.PROBLEM_DETAILS?.replace(":id", problemId)}`)
       .then(({ data }) => {
         if (data && data.success) {
-          setList({ ...list, code: data.data.code });
+          setCompilerData({ ...compilerData, code: data.data.code });
           setPrevData({
             ...prevData,
             title: data.data.title,
@@ -104,7 +104,6 @@ const CodeEditor: React.FC = () => {
       })
       .catch((err) => console.error(err));
   };
-
 
   useEffect(() => {
     if (COMPILER_URL) {
@@ -119,7 +118,7 @@ const CodeEditor: React.FC = () => {
     <div>
       <div className="row col-md-8 mt-3 p-2">
         {/* LANGUAGES SELECT  */}
-        <CommonSelect 
+        <CommonSelect
           divClass="col-md-3"
           onChange={(e) => selectLanguageHandler(e)}
           name="languages"
@@ -129,7 +128,7 @@ const CodeEditor: React.FC = () => {
         />
 
         {/* THEME SELECT    */}
-        <CommonSelect 
+        <CommonSelect
           divClass="col-md-3"
           onChange={(e) => themeChangeHandler(e)}
           name="theme"
@@ -137,9 +136,9 @@ const CodeEditor: React.FC = () => {
           selectEle={themeState.theme}
           from={THEME}
         />
-         
-         {/* FONT SIZE  */}
-         <CommonSelect 
+
+        {/* FONT SIZE  */}
+        <CommonSelect
           divClass="col-md-1"
           onChange={(e) => themeChangeHandler(e)}
           name="fontSize"
@@ -148,7 +147,7 @@ const CodeEditor: React.FC = () => {
           from={FONTSIZE}
         />
 
-         {/* SHOW TITLE  */}
+        {/* SHOW TITLE  */}
         <div className="col-sm-5">
           <h6>
             <b>{`${lodash.upperFirst(prevData?.title)}  { ${lodash.upperFirst(
@@ -165,19 +164,22 @@ const CodeEditor: React.FC = () => {
             defaultLanguage={"javascript"}
             language={changeLang}
             // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}
-            value={list.code}
+            value={compilerData.code}
             theme={themeState.theme}
-            options={{ fontSize:themeState.fontSize }}
-            onChange={(val) => val && setList({ ...list, code: val })}
+            options={{ fontSize: themeState.fontSize }}
+            onChange={(val) =>
+              val && setCompilerData({ ...compilerData, code: val })
+            }
           />
         </div>
-         <InputOutputCMP saveLoading={saveLoading}
-           compileHandler={compileHandler} 
-           compilerLoading={compilerLoading}
-           compilerOutput={compilerOutput}
-           onSubmit={onSubmit}
-           problemId={params.id}
-          />
+        <InputOutputCMP
+          saveLoading={saveLoading}
+          compileHandler={compileHandler}
+          compilerLoading={compilerLoading}
+          compilerOutput={compilerOutput}
+          onSubmit={onSubmit}
+          problemId={params.id}
+        />
       </div>
     </div>
   );

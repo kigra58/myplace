@@ -1,43 +1,49 @@
-import axios from 'axios';
-import  { useState } from 'react';
-import { COMPILER_URL } from '../constant';
-// import { ILangData } from '../interfaces';
+import axios from "axios";
+import { useState } from "react";
+import { COMPILER_URL } from "../constant";
 
-
-const useCompiler = ({code,language,input}:{
-    code:string;
-    language:string;
-    input:string
-}) => {
-    const [compilerLoading,setCompilerLoading]=useState(false);
-    const [compilerOutput,setCompilerOutput]=useState("");
-    
-    /**
-     * CHECK COMPILER
-     * @param args 
-     */
-    const compileHandler = async () => {
-        try {
-            setCompilerLoading(true);
-          const { data } = await axios.post(`${COMPILER_URL}`, {code,language,input});
-          if (
-            data &&
-            data.status === 200 &&
-            data.error === "" &&
-            data.output !== ""
-          ) {
-            setCompilerOutput(data.output);
-          }
-          setCompilerLoading(false);
-        } catch (error) {
-          console.error(error);
-        }
-        setCompilerLoading(false);
-      };
-
-     
-
-  return {compilerLoading, compilerOutput,setCompilerOutput , compileHandler}
+interface IProps {
+  code: string;
+  language: string;
+  input: string;
 }
 
-export default useCompiler
+const useCompiler = (propsData: IProps) => {
+  const [compilerLoading, setCompilerLoading] = useState(false);
+  const [compilerOutput, setCompilerOutput] = useState("");
+  const [compilerData, setCompilerData] = useState(propsData);
+
+  /**
+   * CHECK COMPILER
+   * @param args
+   */
+  const compileHandler = async () => {
+    try {
+      setCompilerLoading(true);
+      const { data } = await axios.post(`${COMPILER_URL}`, compilerData);
+      if (
+        data &&
+        data.status === 200 &&
+        data.error === "" &&
+        data.output !== ""
+      ) {
+        setCompilerOutput(data.output);
+      }
+      setCompilerLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+    setCompilerLoading(false);
+  };
+
+  return {
+    compilerLoading,
+    compilerOutput,
+    setCompilerOutput,
+    compileHandler,
+    compilerData,
+    setCompilerData,
+  };
+};
+
+export default useCompiler;
