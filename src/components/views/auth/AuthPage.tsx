@@ -6,8 +6,6 @@ import Signup from "./Signup";
 const Home: React.FC = () => {
   const [isTap, setIsTap] = useState(false);
 
-
-
   return (
     <div className="container">
       <div className="col-md-4 mx-auto mt-5">

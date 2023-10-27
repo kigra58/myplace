@@ -42,10 +42,15 @@ export const StudentEndpoints = {
 };
 
 
+export const BlogEndpoints={
+  CREATE_NEW_BLOG:BASE_URL?.concat("blog").concat(ROUTES.ADD_BLOG),
+  BLOG_LIST:BASE_URL?.concat("blog").concat(ROUTES.BLOG_LIST)
+};
+
 
 export const TestEndpoints={
   SUBMIT_SOLUTION: BASE_URL?.concat("test").concat(ROUTES.SUBMIT_SOLUTION),
   GET_USER_SOLUTION: BASE_URL?.concat("test/user-solution"),
   MCQ_LIST: BASE_URL?.concat("test").concat(ROUTES.MCQ),
   CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(ROUTES.CREATE_NEW_MCQ),
-}
+};

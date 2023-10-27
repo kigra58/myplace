@@ -1,15 +1,15 @@
 import axios from 'axios';
-import  { useEffect, useState } from 'react'
+import  {  useState } from 'react'
 
 const usePost = ({url,payload}:{url:string,payload:{}|[]}) => {
   const [responeData,setResponseData]=useState([])
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState<unknown>(null);
 
-  const postData=async(postUrl:string,postPayload:{}|[])=>{
+  const postData=async()=>{
     try {
         setLoading(true);
-        const {data}=await axios.post(postUrl,postPayload);
+        const {data}=await axios.post(url,payload);
         if(data && data.success){
             setResponseData(data.data);
         }
@@ -21,13 +21,9 @@ const usePost = ({url,payload}:{url:string,payload:{}|[]}) => {
     setLoading(false);
   };
 
-  useEffect(()=>{
-    if(url!=="" && payload){
-        postData(url,payload);
-    }
-  });
+  
 
-  return {responeData,loading,error};
+  return {responeData,loading,error,postData};
 }
 
 export default usePost;

@@ -180,7 +180,7 @@ const AddMCQ: React.FC = () => {
               id="floatingInput"
               placeholder="option"
             />
-            <label htmlFor="floatingInput"> Enter option 4</label>
+            <label htmlFor="floatingInput"> Enter option 4 </label>
           </div>
         </div>
       </div>
@@ -188,6 +188,7 @@ const AddMCQ: React.FC = () => {
         className="btn btn-dark  "
         onClick={() => onSubmitHandler()}
         type="button"
+        disabled={loading}
       >
         Submit
         {loading && (

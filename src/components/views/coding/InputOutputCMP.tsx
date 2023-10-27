@@ -35,7 +35,7 @@ const InputOutputCMP: React.FC<IProp> = ({
       />
       <br />
       {/* COMPILE CODE  */}
-      <button className="btn btn-success" onClick={() => compileHandler()}>
+      <button className="btn btn-success" disabled={compilerLoading} onClick={() => compileHandler()}>
         COMPILE CODE
         {compilerLoading && (
           <div className="spinner-grow spinner-grow-sm" role="status">
@@ -47,6 +47,7 @@ const InputOutputCMP: React.FC<IProp> = ({
       <button
         className="btn btn-dark mx-3"
         type="button"
+        disabled={saveLoading}
         onClick={() => (problemId ? onSubmit(problemId) : onSubmit())}
       >
         SAVE CODE
