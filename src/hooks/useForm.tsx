@@ -11,11 +11,9 @@ const useForm = (data:any) => {
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { value, name } = e.target;
-    if (value) {
-      setFormData((pre: typeof data) => {
+    setFormData((pre: typeof data) => {
         return { ...pre, [name]: value };
-      });
-    }
+    });
   };
   return { formData, onChangeHandler, setFormData };
 };

@@ -43,6 +43,7 @@ const Signup: React.FC = () => {
           name="firstName"
           type="text"
           className="form-control"
+          required
           id="floatingInput"
           placeholder="name@example.com"
         />
@@ -53,6 +54,7 @@ const Signup: React.FC = () => {
           onChange={(e) => onChangeHandler(e)}
           value={newUser.lastName}
           name="lastName"
+          required
           type="text"
           className="form-control"
           id="floatingInput"
@@ -66,6 +68,7 @@ const Signup: React.FC = () => {
           value={newUser.email}
           type="email"
           name="email"
+          required
           className="form-control"
           id="floatingInput"
           placeholder="name@example.com"
@@ -79,6 +82,7 @@ const Signup: React.FC = () => {
           type="password"
           name="password"
           className="form-control"
+          required
           id="floatingPassword"
           placeholder="Password"
         />
@@ -92,6 +96,7 @@ const Signup: React.FC = () => {
               onChange={(e) => onChangeHandler(e)}
               value={newUser.accountType}  
               className="form-check-input"
+              required
               type="radio"
               name="accountType"
               id="flexRadioDefault1"
@@ -108,6 +113,7 @@ const Signup: React.FC = () => {
              value={newUser.accountType}  
               className="form-check-input"
               type="radio"
+              required
               name="accountType"
               id="flexRadioDefault2"
             />

@@ -3,7 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 
-const Home: React.FC = () => {
+const AuthPage: React.FC = () => {
   const [isTap, setIsTap] = useState(false);
 
   return (
@@ -39,4 +39,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default AuthPage;

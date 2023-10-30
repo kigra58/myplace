@@ -1,6 +1,7 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const ROUTES = {
   HOME:"/",
+  LOGIN:"/login",
   PROBLEMS: "/problems",
   MCQ: "/mcq-list",
   CREATE_NEW_PROBLEM: "/create-new-problem",

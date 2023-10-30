@@ -11,8 +11,8 @@ interface Props {
 const ProtectedRoutes:React.FC<Props> = ({component:RouteComponent}) => {
   const authData=useSelector((state:RootState)=>state.auth.authData);
   
-if (authData.token) return <RouteComponent />;
-return <Navigate to={ROUTES.HOME} />;
+if (authData && authData.token) return <RouteComponent />;
+return <Navigate to={ROUTES.LOGIN} />;
 }
 
 export default ProtectedRoutes

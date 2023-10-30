@@ -36,6 +36,7 @@ const Login: React.FC = () => {
           className="form-control"
           id="floatingInput"
           placeholder="name@example.com"
+          required
           name="email"
           value={loginData.email}
         />
@@ -46,6 +47,7 @@ const Login: React.FC = () => {
           onChange={(e)=>onChangeHandler(e)}
           type="password"
           className="form-control"
+          required
           id="floatingPassword"
           placeholder="Password"
           name="password"

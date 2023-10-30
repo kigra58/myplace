@@ -1,5 +1,4 @@
 import React from "react";
-import { Navbar } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import { useSelector } from "react-redux";
@@ -13,23 +12,14 @@ import AddMCQ from "../components/views/coding/AddMCQ";
 import MCQ from "../components/views/coding/MCQ";
 import ProblemList from "../components/views/coding/ProblemList";
 import TestList from "../components/views/userTest/TestList";
-import Home from "../components/views/auth/AuthPage";
+import AuthPage from "../components/views/auth/AuthPage";
 import TestDetails from "../components/views/userTest/TestDetails";
 import AddBlog from "../components/views/blog/AddBlog";
 import BlogList from "../components/views/blog/BlogList";
-import AuthPage from "../components/views/auth/AuthPage";
+import Home from "../components/views/coding/Home";
+import Navbar from "../components/utilities/Navbar/Navbar";
 
-// interface Props {
-//   component: React.ComponentType;
-// }
 
-// const ProtectWithNavbar: React.FC<Props> = ({ component }) => {
-//   return (
-//     <>
-//       <ProtectedRoutes component={component} />
-//     </>
-//   );
-// };
 
 const PublicRoutes: React.FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authData);
@@ -85,7 +75,7 @@ const PublicRoutes: React.FC = () => {
         />
 
         <Route
-          path={ROUTES.HOME}
+          path={ROUTES.LOGIN}
           element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
         />
 
