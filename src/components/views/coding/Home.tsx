@@ -1,9 +1,10 @@
 import React from 'react'
+import StudentDashboard from '../student/StudentDashboard'
 
 const Home:React.FC = () => {
   return (
     <div>
-      <h1> Home </h1>
+      <StudentDashboard/>
     </div>
   )
 }

@@ -11,7 +11,7 @@ const useFeth = (url:string,fetchType?:string) => {
    */
   const getList = (url: string) => {
     axios.get(url).then(({ data }) => {
-        // console.log("===================Responseeeeee",data)
+        console.log("===================Responseeeeee",data.data)
         if (data && data.status) {
           setData(data.data);
         }
@@ -25,7 +25,7 @@ const useFeth = (url:string,fetchType?:string) => {
   const fetchData=async(url:string)=>{
     try {
       setLoading(true);
-      const {data}=await axios.get(url)
+      const {data}=await axios.get(url);
       if(data && data.success){
         setData(data.data);
       }
@@ -37,7 +37,6 @@ const useFeth = (url:string,fetchType?:string) => {
     setLoading(false);
   };
 
-
   useEffect(()=>{
     if(url!=="" && fetchType==="await"){
      fetchData(url);
@@ -46,6 +45,7 @@ const useFeth = (url:string,fetchType?:string) => {
         getList(url)
     }
   },[url]);
+
   if(fetchType==="await"){
     return {data,error,loading};
   }else{

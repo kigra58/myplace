@@ -12,7 +12,7 @@ export const ROUTES = {
   BLOG_LIST:"/blog-list",
   STUDENT_DASHBOARD:"/student-dashboard",
   COMPANY_DASHBOARD:"/company-dashboard",
-  TEST_DETAILS:"/test-deatils",
+  TEST_DETAILS:"/test-deatils/:id",
   TEST_LIST:"/test-list"
 };
 

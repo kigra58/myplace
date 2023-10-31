@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, {  useState } from "react";
+import { RootState } from "../../../rtk/store";
+import { useSelector } from "react-redux";
 import { TestEndpoints } from "../../../routes/routes";
+import usePost from "../../../hooks/usePost";
+import useFeth from "../../../hooks/useFetch";
 
 
 
@@ -10,8 +13,7 @@ interface ISolution{
 }
 
 const MCQ: React.FC = () => {
-  const [mcqList, setMCQList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const authData=useSelector((state:RootState)=>state.auth.authData);
   const [userSolution,setUserSolution]=useState<ISolution[]>([]);
 
   const onChangeHandler=(e: React.ChangeEvent<HTMLInputElement>,questionId:string)=>{
@@ -32,50 +34,18 @@ const MCQ: React.FC = () => {
     }    
   };
 
-  const postData=async()=>{
-    try {
-      const {data}=await axios.post(`${TestEndpoints.SUBMIT_SOLUTION}`,{
-        userId:"6538e443b082f6f5250b7bba",
-        userSolution
-      });
-      if(data && data.success){
-       alert("data submitted");
-      }
-    } catch (error) {
-      console.error(error);
+  console.log("=================authData",authData);
+
+  const {data:mcqList,loading:listLoading}= useFeth(`${TestEndpoints.MCQ_LIST}`,"await");
+  const {postData,loading:postLoading}=usePost({
+    url:`${TestEndpoints.SUBMIT_SOLUTION}`,
+    payload:{
+      userId:authData && authData.user && authData.user._id,
+      userSolution
     }
-  };
+  });
 
-  const getMCQ = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${TestEndpoints.MCQ_LIST}`);
-      if (data && data.success) {
-        setMCQList(data.data);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error(error);
-    }
-    setLoading(false);
-  };
 
-  const getSolution=async()=>{
-     try {
-      const {data}=await axios.get(`${TestEndpoints.GET_USER_SOLUTION}`);
-      if(data && data.success){
-         console.log("==============response",data.data)
-      }
-     } catch (error) {
-      console.error(error);
-     };
-  };
-
-  useEffect(() => {
-    getMCQ();
-  }, []);
-
-  console.log("===================tttttttttt",userSolution);
  
   return (
     <div className="container">
@@ -113,16 +83,23 @@ const MCQ: React.FC = () => {
                     })}
                 </li>
               )}
-          ):loading?"Loading...":"data not found"
+          ):listLoading?"Loading...":"data not found"
         }
       </ul>
 
       <div>
-          <button className="btn btn-dark" onClick={()=>postData()}> Submit </button>
+          <button className="btn btn-dark" disabled={postLoading} onClick={()=>postData()}>
+             Submit 
+             {postLoading &&(
+              <div className="spinner-grow spinner-grow-sm" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+             )}
+          </button>
       </div>
-      <div className="mt-5">
+      {/* <div className="mt-5">
           <button className="btn btn-dark" onClick={()=>getSolution()}> solutions </button>
-      </div>
+      </div> */}
     </div>
   );
 };

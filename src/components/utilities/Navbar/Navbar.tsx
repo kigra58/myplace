@@ -37,6 +37,9 @@ const Navbar: React.FC = () => {
             <NavLink className="nav-link " to={ROUTES.MCQ} >
               MCQ'S
             </NavLink>
+            <NavLink className="nav-link " to={ROUTES.TEST_LIST} >
+              Tests 
+            </NavLink>
        
           </div>
         </div>

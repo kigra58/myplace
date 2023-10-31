@@ -16,4 +16,4 @@ export const LANGUAGES="languages";
 export const CATEGORY="category";
 export const FONTSIZE="fontSize";
 
-export const TestListTH:string[]=["SNo"]
+export const TestListTH:string[]=["SNo, Percentage %,Obtained,Total,Total Question,Test Date"]
