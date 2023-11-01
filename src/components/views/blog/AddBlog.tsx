@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import usePost from "../../../hooks/usePost";
 import useForm from "../../../hooks/useForm";
 import { BlogEndpoints } from "../../../routes/routes";
 import { convertToBase64 } from "../../../helper/helper";
+import { useParams } from "react-router-dom";
+import useFeth from "../../../hooks/useFetch";
 
 const AddBlog: React.FC = () => {
+  const params = useParams();
   const [changeText, setChangeText] = useState("");
   const [fileChange, setFileChange] = useState<File>();
-  const [imageUrl,setImageUrl]=useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const { formData, onChangeHandler, setFormData } = useForm({
     title: "",
     category: "",
   });
-  
+
+  const { data: bloginfo } = useFeth(
+    `${BlogEndpoints.BLOG_DEATILS?.replace(":id", `${params.id}`)}`,
+    "await"
+  );
 
   const { loading, postData } = usePost({
     url: `${BlogEndpoints.CREATE_NEW_BLOG}`,
@@ -23,20 +30,20 @@ const AddBlog: React.FC = () => {
       title: formData.title,
       category: formData.category,
       content: changeText,
-      thumbnail:imageUrl
+      thumbnail: imageUrl,
     },
   });
 
-
-
-  const fileChangeHandler =async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const fileChangeHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files;
     if (file && file.length > 0) {
       setFileChange(file[0]);
-      const base64Data=await convertToBase64(file[0]);
+      const base64Data = await convertToBase64(file[0]);
       setImageUrl(`${base64Data}`);
     }
   };
+
+  console.log("================bloginfo", bloginfo);
 
   return (
     <div className="container-fluid">
@@ -76,7 +83,10 @@ const AddBlog: React.FC = () => {
             <label htmlFor="floatingInput"> Category </label>
           </div>
           {/* PREVIEW THUMBNAIL  */}
-          <div className="mt-4 shadow rounded-3" style={{ height: 254, width: 400 }}>
+          <div
+            className="mt-4 shadow rounded-3"
+            style={{ height: 254, width: 400 }}
+          >
             {fileChange && (
               <img
                 loading="lazy"
@@ -118,8 +128,7 @@ const AddBlog: React.FC = () => {
               )}
             </button>
           </div>
-          <div>
-          </div>
+          <div></div>
         </div>
       </div>
     </div>

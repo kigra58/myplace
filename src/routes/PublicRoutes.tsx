@@ -18,8 +18,7 @@ import AddBlog from "../components/views/blog/AddBlog";
 import BlogList from "../components/views/blog/BlogList";
 import Home from "../components/views/coding/Home";
 import Navbar from "../components/utilities/Navbar/Navbar";
-
-
+import ReadBlog from "../components/views/blog/ReadBlog";
 
 const PublicRoutes: React.FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authData);
@@ -75,10 +74,18 @@ const PublicRoutes: React.FC = () => {
         />
 
         <Route
+          path={ROUTES.BLOG_DETAILS}
+          element={<ProtectedRoutes component={ReadBlog} />}
+        />
+        <Route
+          path={ROUTES.EDIT_BLOG}
+          element={<ProtectedRoutes component={AddBlog} />}
+        />
+
+        <Route
           path={ROUTES.LOGIN}
           element={authData ? <Navigate to={ROUTES.HOME} /> : <AuthPage />}
         />
-
       </Routes>
     </>
   );

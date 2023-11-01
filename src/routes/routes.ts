@@ -9,10 +9,12 @@ export const ROUTES = {
   COMPILER: "/compiler/:id",
   SUBMIT_SOLUTION:"/submit-solution",
   ADD_BLOG:"/create-blog",
+  EDIT_BLOG:"/edit-blog/:id",
   BLOG_LIST:"/blog-list",
   STUDENT_DASHBOARD:"/student-dashboard",
   COMPANY_DASHBOARD:"/company-dashboard",
   TEST_DETAILS:"/test-deatils/:id",
+  BLOG_DETAILS:"/blog/:id",
   TEST_LIST:"/test-list",
 
 };
@@ -47,7 +49,7 @@ export const StudentEndpoints = {
 export const BlogEndpoints={
   CREATE_NEW_BLOG:BASE_URL?.concat("blog").concat(ROUTES.ADD_BLOG),
   BLOG_LIST:BASE_URL?.concat("blog").concat(ROUTES.BLOG_LIST),
-  BLOG_DEATILS:BASE_URL?.concat("blog").concat("/blog/:id")
+  BLOG_DEATILS:BASE_URL?.concat("blog").concat("/:id")
 };
 
 
