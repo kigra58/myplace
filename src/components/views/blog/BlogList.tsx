@@ -9,7 +9,7 @@ import { BlogEndpoints, ROUTES } from "../../../routes/routes";
 
 const BlogList: React.FC = () => {
   const navigate = useNavigate();
-  const { data, loading } = useFeth(`${BlogEndpoints.BLOG_LIST}`, "await");
+  const { data, loading } = useFeth(`${BlogEndpoints.BLOG_LIST?.replace("/:id","")}`, "await");
 
   console.log("PPPPPPPPPPPPPPPPPPPP", data);
 
@@ -31,9 +31,10 @@ const BlogList: React.FC = () => {
               created_at: string;
               title: string;
               content: string;
-            }) => {
+              _id:string; 
+            },index) => {
               return (
-                <div className="col-md-4">
+                <div className="col-md-4" key={index}>
                   <div className="card"  >
                     <img loading="lazy" height="200" width="250" src={it.thumbnail} 
                       className="card-img-top" alt="..." />
@@ -53,7 +54,14 @@ const BlogList: React.FC = () => {
                           {moment(it?.created_at).format("MMM DD YYYY")}
                         </small>
                       </p>
-                      <Link to="#" className="card-link">Read More .. </Link>
+                      <div className="row">
+                        <div className="col-sm-6">
+                         <Link to="#" className="card-link">Read More .. </Link>
+                        </div>
+                        <div className="col-sm-6">
+                          <Link to={`${ROUTES.BLOG_LIST}/${it?._id}`} className="card-link">Edit Blog</Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

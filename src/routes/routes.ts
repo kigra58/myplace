@@ -13,7 +13,8 @@ export const ROUTES = {
   STUDENT_DASHBOARD:"/student-dashboard",
   COMPANY_DASHBOARD:"/company-dashboard",
   TEST_DETAILS:"/test-deatils/:id",
-  TEST_LIST:"/test-list"
+  TEST_LIST:"/test-list",
+
 };
 
 export const CodingEndpoints = {
@@ -45,7 +46,8 @@ export const StudentEndpoints = {
 
 export const BlogEndpoints={
   CREATE_NEW_BLOG:BASE_URL?.concat("blog").concat(ROUTES.ADD_BLOG),
-  BLOG_LIST:BASE_URL?.concat("blog").concat(ROUTES.BLOG_LIST)
+  BLOG_LIST:BASE_URL?.concat("blog").concat(ROUTES.BLOG_LIST),
+  BLOG_DEATILS:BASE_URL?.concat("blog").concat("/blog/:id")
 };
 
 
