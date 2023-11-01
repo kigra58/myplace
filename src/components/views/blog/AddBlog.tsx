@@ -4,30 +4,53 @@ import "suneditor/dist/css/suneditor.min.css";
 import usePost from "../../../hooks/usePost";
 import useForm from "../../../hooks/useForm";
 import { BlogEndpoints } from "../../../routes/routes";
+import { convertToBase64 } from "../../../helper/helper";
 
 const AddBlog: React.FC = () => {
   const [changeText, setChangeText] = useState("");
+  const [fileChange, setFileChange] = useState<File>();
+  const [imageUrl,setImageUrl]=useState("");
 
-  const { formData, onChangeHandler,setFormData } = useForm({
+  const { formData, onChangeHandler, setFormData } = useForm({
     title: "",
     category: "",
   });
+  
 
-  const { loading,postData } = usePost({
+  const { loading, postData } = usePost({
     url: `${BlogEndpoints.CREATE_NEW_BLOG}`,
     payload: {
       title: formData.title,
       category: formData.category,
       content: changeText,
+      thumbnail:imageUrl
     },
   });
- 
 
+
+
+  const fileChangeHandler =async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file = e.target.files;
+    if (file && file.length > 0) {
+      setFileChange(file[0]);
+      const base64Data=await convertToBase64(file[0]);
+      setImageUrl(`${base64Data}`);
+    }
+  };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-5">
+    <div className="container-fluid">
+      <div className="row mt-4">
+        <div className="col-md-8 ">
+          <SunEditor
+            defaultValue={changeText}
+            onChange={(val: string) => setChangeText(val)}
+            placeholder="Please type here"
+            width="1000px"
+            height="600px"
+          />
+        </div>
+        <div className="col-md-4" style={{ width: 425 }}>
           <div className="form-floating mb-3">
             <input
               onChange={(e) => onChangeHandler(e)}
@@ -40,8 +63,6 @@ const AddBlog: React.FC = () => {
             />
             <label htmlFor="floatingInput">Title</label>
           </div>
-        </div>
-        <div className="col-md-5">
           <div className="form-floating mb-3">
             <input
               onChange={(e) => onChangeHandler(e)}
@@ -54,32 +75,52 @@ const AddBlog: React.FC = () => {
             />
             <label htmlFor="floatingInput"> Category </label>
           </div>
-        </div>
-      </div>
-      <SunEditor
-        defaultValue={changeText}
-        onChange={(val: string) => setChangeText(val)}
-        placeholder="Please type here"
-        width="1200px"
-        height="600px"
-      />
-      <div className="mt-2">
-        <button disabled={loading} onClick={()=>{
-          postData();
-          setChangeText("");
-          setFormData({
-            title:"",
-            category:""
-          });
-          }} className="btn btn-dark">
-
-          Submit 
-          {loading && (
-          <div className="spinner-grow spinner-grow-sm" role="status">
-            <span className="visually-hidden">Loading...</span>
+          {/* PREVIEW THUMBNAIL  */}
+          <div className="mt-4 shadow rounded-3" style={{ height: 254, width: 400 }}>
+            {fileChange && (
+              <img
+                loading="lazy"
+                width="400"
+                height="350"
+                className="img-thumbnail shadow"
+                src={URL.createObjectURL(fileChange)}
+                alt="thumbnail"
+              />
+            )}
           </div>
-        )}
-        </button>
+          <div className="mt-5">
+            <input
+              name="title"
+              className="form-control shadow-sm"
+              onChange={(e) => fileChangeHandler(e)}
+              type="file"
+              placeholder="Enter Title"
+            />
+          </div>
+          <div className="mt-4">
+            <button
+              disabled={loading}
+              onClick={() => {
+                postData();
+                setChangeText("");
+                setFormData({
+                  title: "",
+                  category: "",
+                });
+              }}
+              className="btn btn-outline-dark shadow col-sm-12 "
+            >
+              Submit
+              {loading && (
+                <div className="spinner-grow spinner-grow-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              )}
+            </button>
+          </div>
+          <div>
+          </div>
+        </div>
       </div>
     </div>
   );

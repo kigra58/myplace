@@ -1,11 +1,11 @@
 import React from "react";
-import { TestListTH } from "../../../helper/constant";
-import useFeth from "../../../hooks/useFetch";
-import { ROUTES, StudentEndpoints } from "../../../routes/routes";
+import { Link } from "react-router-dom";
 import { RootState } from "../../../rtk/store";
 import { useSelector } from "react-redux";
+import { TestListTH } from "../../../helper/constant";
+import { ROUTES, StudentEndpoints } from "../../../routes/routes";
+import useFeth from "../../../hooks/useFetch";
 import moment from "moment";
-import { Link } from "react-router-dom";
 
 const TestList: React.FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authData);
@@ -27,13 +27,9 @@ const TestList: React.FC = () => {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">SNo</th>
-            <th scope="col">Total Question</th>
-            <th scope="col">Total Marks</th>
-            <th scope="col">Obtained Marks </th>
-            <th scope="col">Percentage</th>
-            <th scope="col"> Date </th>
-            <th scope="col"> View </th>
+            {TestListTH && TestListTH.length>0 && TestListTH.map((i)=>(
+              <th scope="col">{i}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -46,7 +42,7 @@ const TestList: React.FC = () => {
                     <td> total question * 4 </td>
                     <td> correct question *4 </td>
                     <td> % </td>
-                    <td>{moment(it?.created_at).format("MMM DD YYYY")}</td>
+                    <td>{ moment(it?.created_at).format("MMM DD YYYY")}</td>
                     <td className="text-primary"> <Link to={ROUTES.TEST_DETAILS.replace(":id",it._id)} /> <u> View </u> </td>
                   </tr>
                 );

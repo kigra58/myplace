@@ -40,6 +40,9 @@ const Navbar: React.FC = () => {
             <NavLink className="nav-link " to={ROUTES.TEST_LIST} >
               Tests 
             </NavLink>
+            <NavLink className="nav-link " to={ROUTES.BLOG_LIST} >
+               Blogs
+            </NavLink>
        
           </div>
         </div>
