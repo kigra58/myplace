@@ -13,7 +13,7 @@ const AddBlog: React.FC = () => {
   const [changeText, setChangeText] = useState("");
   const [fileChange, setFileChange] = useState<File>();
   const [imageUrl, setImageUrl] = useState("");
-  const [imageSRC,setImageSRC]=useState("")
+  const [imageSRC,setImageSRC]=useState("");
 
   const { formData, onChangeHandler, setFormData } = useForm({
     title: "",
@@ -32,6 +32,7 @@ const AddBlog: React.FC = () => {
       category: formData.category,
       content: changeText,
       thumbnail: imageUrl,
+      blogId:params && params.id ? params.id:undefined
     },
   });
 
@@ -41,7 +42,7 @@ const AddBlog: React.FC = () => {
       setFileChange(file[0]);
       const base64Data = await convertToBase64(file[0]);
       setImageUrl(`${base64Data}`);
-    }
+    };
   };
 
   const getBlob=async(url:string)=>{
@@ -51,7 +52,7 @@ const AddBlog: React.FC = () => {
      } catch (error) {
       console.error(error);
      };
-  }
+  };
 
   
   useEffect(()=>{
@@ -61,7 +62,7 @@ const AddBlog: React.FC = () => {
        setFormData({...formData,title,category});
        getBlob(thumbnail);
     }
-  },[bloginfo])
+  },[bloginfo]);
 
 
   return (
@@ -70,6 +71,7 @@ const AddBlog: React.FC = () => {
         <div className="col-md-8 ">
           <SunEditor
             defaultValue={changeText}
+            setContents={changeText}
             onChange={(val: string) => setChangeText(val)}
             placeholder="Please type here"
             width="1000px"
@@ -104,7 +106,7 @@ const AddBlog: React.FC = () => {
           {/* PREVIEW THUMBNAIL  */}
           <div
             className="mt-4 shadow rounded-3"
-            style={{ height: 254, width: 400 }}
+            style={{ height: 254, width: 400 ,}}
           >
             {fileChange ? (
               <img
@@ -115,7 +117,7 @@ const AddBlog: React.FC = () => {
                 src={URL.createObjectURL(fileChange)}
                 alt="thumbnail"
               />
-            ):   <img
+            ): imageSRC!=="" && <img
             loading="lazy"
             width="400"
             height="350"

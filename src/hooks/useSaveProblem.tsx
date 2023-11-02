@@ -25,7 +25,7 @@ const useSaveProblem = ({title,category,code}:{title:string;category:string;code
     setSaveLoading(false);
   };
 
-  return {saveLoading,onSubmit}
+  return {saveLoading,onSubmit};
 }
 
 export default useSaveProblem;

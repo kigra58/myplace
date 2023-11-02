@@ -4,7 +4,6 @@ import moment from "moment";
 import lodash from "lodash";
 import useFeth from "../../../hooks/useFetch";
 import { convert } from "html-to-text";
-
 import { BlogEndpoints, ROUTES } from "../../../routes/routes";
 
 const BlogList: React.FC = () => {
