@@ -55,7 +55,7 @@ const BlogList: React.FC = () => {
                       <p className="card-text">
                         {it && it.content !== ""
                           ? convert(it?.content)
-                              .substring(0, 30)
+                              .substring(0,70)
                               .concat(" . . .")
                           : ""}
                       </p>

@@ -13,8 +13,6 @@ const ReadBlog: React.FC = () => {
     "await"
   );
 
-  console.log("============,ffffffff",bloginfo)
-
   return (
     <div className="container mt-5">
       {bloginfo &&

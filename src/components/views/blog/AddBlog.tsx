@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
+import { BlogEndpoints } from "../../../routes/routes";
+import { convertBase64ToBlog, convertToBase64 } from "../../../helper/helper";
+import { useParams } from "react-router-dom";
 import usePost from "../../../hooks/usePost";
 import useForm from "../../../hooks/useForm";
-import { BlogEndpoints } from "../../../routes/routes";
-import { convertToBase64 } from "../../../helper/helper";
-import { useParams } from "react-router-dom";
 import useFeth from "../../../hooks/useFetch";
 
 const AddBlog: React.FC = () => {
@@ -13,6 +13,7 @@ const AddBlog: React.FC = () => {
   const [changeText, setChangeText] = useState("");
   const [fileChange, setFileChange] = useState<File>();
   const [imageUrl, setImageUrl] = useState("");
+  const [imageSRC,setImageSRC]=useState("")
 
   const { formData, onChangeHandler, setFormData } = useForm({
     title: "",
@@ -43,7 +44,25 @@ const AddBlog: React.FC = () => {
     }
   };
 
-  console.log("================bloginfo", bloginfo);
+  const getBlob=async(url:string)=>{
+     try {
+      const imgURL= await convertBase64ToBlog(url);
+       setImageSRC(imgURL);
+     } catch (error) {
+      console.error(error);
+     };
+  }
+
+  
+  useEffect(()=>{
+    if(bloginfo && bloginfo.length>0){
+       const {title,content,category,thumbnail}=bloginfo[0];
+       setChangeText(content);
+       setFormData({...formData,title,category});
+       getBlob(thumbnail);
+    }
+  },[bloginfo])
+
 
   return (
     <div className="container-fluid">
@@ -87,7 +106,7 @@ const AddBlog: React.FC = () => {
             className="mt-4 shadow rounded-3"
             style={{ height: 254, width: 400 }}
           >
-            {fileChange && (
+            {fileChange ? (
               <img
                 loading="lazy"
                 width="400"
@@ -96,7 +115,14 @@ const AddBlog: React.FC = () => {
                 src={URL.createObjectURL(fileChange)}
                 alt="thumbnail"
               />
-            )}
+            ):   <img
+            loading="lazy"
+            width="400"
+            height="350"
+            className="img-thumbnail shadow"
+            src={imageSRC}
+            alt="thumbnail"
+          />}
           </div>
           <div className="mt-5">
             <input
@@ -117,6 +143,7 @@ const AddBlog: React.FC = () => {
                   title: "",
                   category: "",
                 });
+                setFileChange(undefined);
               }}
               className="btn btn-outline-dark shadow col-sm-12 "
             >
@@ -128,7 +155,6 @@ const AddBlog: React.FC = () => {
               )}
             </button>
           </div>
-          <div></div>
         </div>
       </div>
     </div>

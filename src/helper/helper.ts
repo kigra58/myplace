@@ -10,3 +10,11 @@ export const convertToBase64 = (file:File) => {
       };
     });
   };
+
+
+ export const  convertBase64ToBlog=async (url:string)=>{
+   const res = await fetch(url);
+   const blob = await res.blob();
+   const imageUrl= URL.createObjectURL(blob);
+   return imageUrl;  
+ } 
