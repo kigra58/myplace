@@ -6,54 +6,74 @@ import axios from "axios";
 import lodash from "lodash";
 import Themes from "./themes.json";
 
-import { COMPILERS, COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME } from "../../../helper/constant";
+import {
+  COMPILERS,
+  // COMPILER_URL,
+  FONTSIZE,
+  FONT_SIZE,
+  LANGUAGES,
+  THEME,
+} from "../../../helper/constant";
 import { CodingEndpoints } from "../../../routes/routes";
 
 import InputOutputCMP from "./InputOutputCMP";
 import useForm from "../../../hooks/useForm";
-import useCompiler from "../../../hooks/useCompiler";
+// import useCompiler from "../../../hooks/useCompiler";
 import useSaveProblem from "../../../hooks/useSaveProblem";
 import CommonSelect from "../../commonCMP/CommonSelect";
+import usePost from "../../../hooks/usePost";
 
-
-
-
-
-interface ICompiler {
-  info: string;
-  language: string;
-}
+// interface ICompiler {
+//   info: string;
+//   language: string;
+// }
 
 const CodeEditor: React.FC = () => {
   const params = useParams();
-  const [compilerList, setCompilerList] = useState<ICompiler[]>();
+  // const [compilerList, setCompilerList] = useState<ICompiler[]>();
   const [changeLang, setChangeLang] = useState("");
   const [prevData, setPrevData] = useState({
     title: "",
     category: "",
   });
 
-  const {formData:themeState,onChangeHandler:themeChangeHandler}=useForm({
-    theme: Themes[1].value,
-    fontSize: FONT_SIZE[0],
-  });
+  const { formData, onChangeHandler: themeChangeHandler ,setFormData} = useForm(
+    {
+      theme: Themes[1].value,
+      fontSize: FONT_SIZE[0],
+      code:"",
+      language:"js"
+    }
+  );
 
+  // const {
+  //   compilerLoading,
+  //   compilerOutput,
+  //   compilerData,
+  //   setCompilerOutput,
+  //   compileHandler,
+  //   setCompilerData,
+  // } = useCompiler({
+  //   code: "",
+  //   fileType: "js",
+  //   input: "",
+  // });
+    
   const {
-    compilerLoading,
-    compilerOutput,
-    compilerData,
-    setCompilerOutput,
-    compileHandler,
-    setCompilerData,
-  } = useCompiler({
-    code: "",
-    fileType: "js",
-    input: "",
+    responeData,
+    loading: compilerLoading,
+    postData,
+  } = usePost({
+    url: `${CodingEndpoints.COMPILE_CODE}`,
+    payload: {
+      code: formData.code,
+      fileType: formData.language,
+    },
   });
 
   const { saveLoading, onSubmit } = useSaveProblem({
     title: prevData.title,
-    code: compilerData.code,
+    code: formData.code,
     category: prevData.category,
   });
 
@@ -61,30 +81,29 @@ const CodeEditor: React.FC = () => {
    * GET COMPILER LIST
    * @param url
    */
-  const getList = (url: string) => {
-    axios
-      .get(url)
-      .then(({ data }) => {
-        if (data && data.status === 200) {
-          setCompilerList(data.supportedLanguages);
-        }
-      })
-      .catch((err) => console.error(err));
-  };
+  // const getList = (url: string) => {
+  //   axios
+  //     .get(url)
+  //     .then(({ data }) => {
+  //       if (data && data.status === 200) {
+  //         setCompilerList(data.supportedLanguages);
+  //       }
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   /**
    * LANGUAGE HANDLER
    * @param e
    */
   const selectLanguageHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const {value}=e.target
+    const { value } = e.target;
     if (value) {
       setChangeLang(value);
-      setCompilerData({ ...compilerData, fileType: value, input: "" });
-      setCompilerOutput("");
+      setFormData({ ...formData, fileType: value,  });
+      // setCompilerOutput("");
     }
   };
-
 
   /**
    * GET PROBLEMS DETAILS
@@ -95,7 +114,7 @@ const CodeEditor: React.FC = () => {
       .get(`${CodingEndpoints.PROBLEM_DETAILS?.replace(":id", problemId)}`)
       .then(({ data }) => {
         if (data && data.success) {
-          setCompilerData({ ...compilerData, code: data.data.code });
+          setFormData({ ...formData, code: data.data.code });
           setPrevData({
             ...prevData,
             title: data.data.title,
@@ -107,9 +126,9 @@ const CodeEditor: React.FC = () => {
   };
 
   useEffect(() => {
-    if (COMPILER_URL) {
-      getList(COMPILER_URL.concat("/list"));
-    }
+    // if (COMPILER_URL) {
+    //   getList(COMPILER_URL.concat("/list"));
+    // }
     if (params && params.id) {
       getProblemDetails(params.id);
     }
@@ -122,7 +141,7 @@ const CodeEditor: React.FC = () => {
         <CommonSelect
           divClass="col-md-3"
           onChange={(e) => selectLanguageHandler(e)}
-          name="languages"
+          name="language"
           arrData={COMPILERS as any[]}
           selectEle="js"
           from={LANGUAGES}
@@ -134,7 +153,7 @@ const CodeEditor: React.FC = () => {
           onChange={(e) => themeChangeHandler(e)}
           name="theme"
           arrData={Themes}
-          selectEle={themeState.theme}
+          selectEle={formData.theme}
           from={THEME}
         />
 
@@ -144,7 +163,7 @@ const CodeEditor: React.FC = () => {
           onChange={(e) => themeChangeHandler(e)}
           name="fontSize"
           arrData={FONT_SIZE}
-          selectEle={themeState.fontSize}
+          selectEle={formData.fontSize}
           from={FONTSIZE}
         />
 
@@ -165,19 +184,19 @@ const CodeEditor: React.FC = () => {
             defaultLanguage={"javascript"}
             language={changeLang}
             // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}
-            value={compilerData.code}
-            theme={themeState.theme}
-            options={{ fontSize: themeState.fontSize }}
+            value={formData.code}
+            theme={formData.theme}
+            options={{ fontSize: formData.fontSize }}
             onChange={(val) =>
-              val && setCompilerData({ ...compilerData, code: val })
+              val && setFormData({ ...formData, code: val })
             }
           />
         </div>
         <InputOutputCMP
           saveLoading={saveLoading}
-          compileHandler={compileHandler}
+          compileHandler={postData}
           compilerLoading={compilerLoading}
-          compilerOutput={compilerOutput}
+          compilerOutput={`${responeData}`}
           onSubmit={onSubmit}
           problemId={params.id}
         />
