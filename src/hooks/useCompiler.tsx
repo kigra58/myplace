@@ -2,10 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { COMPILER_URL } from "../helper/constant";
 
-
 interface IProps {
   code: string;
-  language: string;
+  fileType: string;
   input: string;
 }
 
@@ -23,12 +22,15 @@ const useCompiler = (propsData: IProps) => {
       setCompilerLoading(true);
       const { data } = await axios.post(`${COMPILER_URL}`, compilerData);
       if (
+        // data &&
+        // data.status === 200 &&
+        // data.error === "" &&
+        // data.output !== ""
         data &&
-        data.status === 200 &&
-        data.error === "" &&
-        data.output !== ""
+        data.success
       ) {
-        setCompilerOutput(data.output);
+        // setCompilerOutput(data.output);
+        setCompilerOutput(data.data);
       }
       setCompilerLoading(false);
     } catch (error) {

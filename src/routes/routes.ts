@@ -21,6 +21,7 @@ export const ROUTES = {
 
 export const CodingEndpoints = {
   CREATE_NEW_PROBLEM: BASE_URL?.concat("coding"),
+  COMPILE_CODE: BASE_URL?.concat("coding/compile-code"),
   PROBLEMS: BASE_URL?.concat("coding").concat(ROUTES.PROBLEMS),
   PROBLEM_DETAILS: BASE_URL?.concat("coding/problem-details/:id"),
   PROBELM_CATEGORY: BASE_URL?.concat("coding/problem-category"),

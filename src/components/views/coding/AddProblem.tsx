@@ -3,13 +3,23 @@ import axios from "axios";
 
 import Editor from "@monaco-editor/react";
 import Themes from "./themes.json";
-import { COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME, firstELe, lastELe } from "../../../helper/constant";
-import useCompiler from "../../../hooks/useCompiler";
+import {
+  COMPILERS,
+  // COMPILER_URL,
+  FONTSIZE,
+  FONT_SIZE,
+  LANGUAGES,
+  THEME,
+  firstELe,
+  lastELe,
+} from "../../../helper/constant";
+// import useCompiler from "../../../hooks/useCompiler";
 import useSaveProblem from "../../../hooks/useSaveProblem";
 import { CodingEndpoints } from "../../../routes/routes";
 import CommonSelect from "../../commonCMP/CommonSelect";
 import InputOutputCMP from "./InputOutputCMP";
-
+import usePost from "../../../hooks/usePost";
+import { defaultCodeHandler } from "../../../helper/helper";
 
 interface ICategory {
   category: string;
@@ -17,7 +27,7 @@ interface ICategory {
 
 const AddProblem: React.FC = () => {
   const [categoryList, setCotegoryList] = useState<ICategory[]>([]);
-  const [compilerList, setCompilerList] = useState([]);
+  // const [compilerList, setCompilerList] = useState([]);
   const [changeText, setChangeText] = useState({
     title: "",
     category: "",
@@ -28,12 +38,24 @@ const AddProblem: React.FC = () => {
     fontSize: FONT_SIZE[0],
   });
 
-  const { compilerLoading, compilerOutput, setCompilerOutput, compileHandler } =
-    useCompiler({
+  // const { compilerLoading, compilerOutput, setCompilerOutput, compileHandler } =
+  //   useCompiler({
+  //     code: changeText.code,
+  //     fileType: changeText.language,
+  //     input: changeText.input,
+  //   });
+
+  const {
+    responeData,
+    loading: compilerLoading,
+    postData,
+  } = usePost({
+    url: `${CodingEndpoints.COMPILE_CODE}`,
+    payload: {
       code: changeText.code,
-      language: changeText.language,
-      input: changeText.input,
-    });
+      fileType: changeText.language,
+    },
+  });
 
   const { saveLoading, onSubmit } = useSaveProblem({
     title: changeText.title,
@@ -50,7 +72,9 @@ const AddProblem: React.FC = () => {
     const { name, value } = e.target;
     if (value) {
       if (name === "language") {
-        setCompilerOutput("");
+        setChangeText({ ...changeText, code:changeText.language !== ""
+        ? defaultCodeHandler(changeText.language)
+        : "" });
       }
       setChangeText((pre) => {
         return { ...pre, [name]: value };
@@ -69,20 +93,20 @@ const AddProblem: React.FC = () => {
     }
   };
 
-  /**
-   * GET COMPILER LIST
-   * @param url
-   */
-  const getCompilerList = (url: string) => {
-    axios
-      .get(url)
-      .then(({ data }) => {
-        if (data && data.status === 200) {
-          setCompilerList(data.supportedLanguages);
-        }
-      })
-      .catch((err) => console.error(err));
-  };
+  // /**
+  //  * GET COMPILER LIST
+  //  * @param url
+  //  */
+  // const getCompilerList = (url: string) => {
+  //   axios
+  //     .get(url)
+  //     .then(({ data }) => {
+  //       if (data && data.status === 200) {
+  //         setCompilerList(data.supportedLanguages);
+  //       }
+  //     })
+  //     .catch((err) => console.error(err));
+  // };
 
   /**
    * GET COMPILER LIST
@@ -102,10 +126,16 @@ const AddProblem: React.FC = () => {
   };
 
   useEffect(() => {
-    getCompilerList(COMPILER_URL.concat("/list"));
+    // getCompilerList(COMPILER_URL.concat("/list"));
     getCategoryList(`${CodingEndpoints.PROBELM_CATEGORY}`);
   }, []);
 
+  
+  useEffect(()=>{
+    setChangeText({...changeText,code:defaultCodeHandler(changeText.language)})
+  },[changeText.language])
+  
+  console.log("pppppppppppppppppp",changeText.code,changeText.language);
   return (
     <div className="p-1">
       <div className="row mt-5">
@@ -134,12 +164,12 @@ const AddProblem: React.FC = () => {
         </div>
 
         {/* LANGUAGES SELECT  */}
-        {compilerList && compilerList.length > 0 && (
+        {COMPILERS && COMPILERS.length > 0 && (
           <CommonSelect
             divClass="col-md-2"
             onChange={(e) => onChangeHandler(e)}
             name="language"
-            arrData={compilerList as any[]}
+            arrData={COMPILERS}
             selectEle="js"
             from={LANGUAGES}
           />
@@ -172,8 +202,16 @@ const AddProblem: React.FC = () => {
           <Editor
             height="85vh"
             defaultLanguage={"javascript"}
+            // defaultValue={
+            //   changeText.language !== ""
+            //     ? defaultCodeHandler(changeText.language)
+            //     : undefined
+            // }
             language={changeText.language}
-            value={changeText.code}
+            // value={changeText.code}
+            value={ changeText.language !== ""
+            ? defaultCodeHandler(changeText.language)
+            : undefined}
             theme={changeText.theme}
             options={{ fontSize: changeText.fontSize }}
             onChange={(val) =>
@@ -183,9 +221,9 @@ const AddProblem: React.FC = () => {
         </div>
         <InputOutputCMP
           onSubmit={onSubmit}
-          compileHandler={compileHandler}
+          compileHandler={postData}
           saveLoading={saveLoading}
-          compilerOutput={compilerOutput}
+          compilerOutput={`${responeData}`}
           compilerLoading={compilerLoading}
         />
       </div>

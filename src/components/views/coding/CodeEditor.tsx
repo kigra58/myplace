@@ -6,7 +6,7 @@ import axios from "axios";
 import lodash from "lodash";
 import Themes from "./themes.json";
 
-import { COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME } from "../../../helper/constant";
+import { COMPILERS, COMPILER_URL, FONTSIZE, FONT_SIZE, LANGUAGES, THEME } from "../../../helper/constant";
 import { CodingEndpoints } from "../../../routes/routes";
 
 import InputOutputCMP from "./InputOutputCMP";
@@ -47,7 +47,7 @@ const CodeEditor: React.FC = () => {
     setCompilerData,
   } = useCompiler({
     code: "",
-    language: "js",
+    fileType: "js",
     input: "",
   });
 
@@ -80,7 +80,7 @@ const CodeEditor: React.FC = () => {
     const {value}=e.target
     if (value) {
       setChangeLang(value);
-      setCompilerData({ ...compilerData, language: value, input: "" });
+      setCompilerData({ ...compilerData, fileType: value, input: "" });
       setCompilerOutput("");
     }
   };
@@ -123,7 +123,7 @@ const CodeEditor: React.FC = () => {
           divClass="col-md-3"
           onChange={(e) => selectLanguageHandler(e)}
           name="languages"
-          arrData={compilerList as any[]}
+          arrData={COMPILERS as any[]}
           selectEle="js"
           from={LANGUAGES}
         />

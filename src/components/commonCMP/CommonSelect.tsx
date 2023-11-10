@@ -2,19 +2,17 @@ import lodash from "lodash";
 import React from "react";
 import { CATEGORY, FONTSIZE, LANGUAGES, THEME } from "../../helper/constant";
 
-
 interface IIterator {
   name: string;
   value: string;
-};
+}
 
-interface ICategory{
-    category:string
-};
-interface ICompiler{
-    language:string
-};
-
+interface ICategory {
+  category: string;
+}
+// interface ICompiler{
+//     language:string|
+// };
 
 interface IProps {
   divClass: string;
@@ -22,8 +20,8 @@ interface IProps {
   name: string;
   selectEle: string | number;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  from:string
-};
+  from: string;
+}
 
 const CommonSelect: React.FC<IProps> = ({
   divClass,
@@ -31,15 +29,14 @@ const CommonSelect: React.FC<IProps> = ({
   name,
   selectEle,
   onChange,
-  from
+  from,
 }) => {
-  
-
-//   console.log("================typeeeeeeee", from);
+  //   console.log("================typeeeeeeee", from);
 
   return (
     <div className={divClass}>
-      <select id="categorySelect"
+      <select
+        id="categorySelect"
         onChange={(e) => onChange(e)}
         className="form-control shadow-sm"
         name={name}
@@ -57,9 +54,9 @@ const CommonSelect: React.FC<IProps> = ({
                 {it.name}
               </option>
             );
-        })}
+          })}
 
-        {from===CATEGORY  &&
+        {from === CATEGORY &&
           arrData &&
           arrData.length > 0 &&
           arrData.map((it: ICategory, index) => {
@@ -72,22 +69,22 @@ const CommonSelect: React.FC<IProps> = ({
                 {it.category}
               </option>
             );
-        })}
-        {from===LANGUAGES &&
+          })}
+        {from === LANGUAGES &&
           arrData &&
           arrData.length > 0 &&
-          arrData.map((it: ICompiler, index) => {
+          arrData.map((it: IIterator, index) => {
             return (
               <option
                 key={index}
-                selected={it.language === selectEle}
-                value={it.language}
+                selected={it.value === selectEle}
+                value={it.value}
               >
-                {lodash.upperCase(it.language)}
+                {lodash.upperFirst(it.name)}
               </option>
             );
-        })}
-  
+          })}
+
         {from === FONTSIZE &&
           arrData &&
           arrData.length > 0 &&
@@ -101,7 +98,7 @@ const CommonSelect: React.FC<IProps> = ({
                 {it}
               </option>
             );
-        })}
+          })}
       </select>
     </div>
   );
