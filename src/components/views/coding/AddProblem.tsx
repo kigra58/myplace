@@ -14,7 +14,7 @@ import {
   lastELe,
 } from "../../../helper/constant";
 // import useCompiler from "../../../hooks/useCompiler";
-import useSaveProblem from "../../../hooks/useSaveProblem";
+// import useSaveProblem from "../../../hooks/useSaveProblem";
 import { CodingEndpoints } from "../../../routes/routes";
 import CommonSelect from "../../commonCMP/CommonSelect";
 import InputOutputCMP from "./InputOutputCMP";
@@ -57,11 +57,19 @@ const AddProblem: React.FC = () => {
     },
   });
 
-  const { saveLoading, onSubmit } = useSaveProblem({
-    title: changeText.title,
-    code: changeText.code,
-    category: changeText.category,
+  const {
+    loading: saveLoading,
+    postData:onSubmit,
+  } = usePost({
+    url: `${CodingEndpoints.CREATE_NEW_PROBLEM}`,
+    payload: {
+     title: changeText.title,
+     code: changeText.code,
+     category: changeText.category,
+    },
   });
+
+
 
   const onChangeHandler = (
     e:

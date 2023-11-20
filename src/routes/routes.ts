@@ -20,7 +20,7 @@ export const ROUTES = {
 };
 
 export const CodingEndpoints = {
-  CREATE_NEW_PROBLEM: BASE_URL?.concat("coding"),
+  CREATE_NEW_PROBLEM: BASE_URL?.concat("coding").concat(ROUTES.CREATE_NEW_PROBLEM),
   COMPILE_CODE: BASE_URL?.concat("coding/compile-code"),
   PROBLEMS: BASE_URL?.concat("coding").concat(ROUTES.PROBLEMS),
   PROBLEM_DETAILS: BASE_URL?.concat("coding/problem-details/:id"),

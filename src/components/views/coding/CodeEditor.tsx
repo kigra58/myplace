@@ -19,7 +19,7 @@ import { CodingEndpoints } from "../../../routes/routes";
 import InputOutputCMP from "./InputOutputCMP";
 import useForm from "../../../hooks/useForm";
 // import useCompiler from "../../../hooks/useCompiler";
-import useSaveProblem from "../../../hooks/useSaveProblem";
+// import useSaveProblem from "../../../hooks/useSaveProblem";
 import CommonSelect from "../../commonCMP/CommonSelect";
 import usePost from "../../../hooks/usePost";
 
@@ -71,10 +71,17 @@ const CodeEditor: React.FC = () => {
     },
   });
 
-  const { saveLoading, onSubmit } = useSaveProblem({
+  
+  const {
+    loading: saveLoading,
+    postData:onSubmit,
+  } = usePost({
+    url: `${CodingEndpoints.CREATE_NEW_PROBLEM}`,
+    payload: {
     title: prevData.title,
     code: formData.code,
     category: prevData.category,
+    },
   });
 
   /**
