@@ -28,7 +28,7 @@ const InputOutputCMP: React.FC<IProp> = ({
       <br />
       <textarea
         style={{ height: 240 }}
-        className="form-control shadow-sm"
+        className={`form-control shadow-sm ${compilerOutput.match("Error")&& "text-danger"}`} 
         maxLength={10}
         placeholder="OUTPUT"
         value={compilerOutput}
