@@ -43,6 +43,9 @@ const Navbar: React.FC = () => {
             <NavLink className="nav-link " to={ROUTES.BLOG_LIST} >
                Blogs
             </NavLink>
+            <NavLink className="nav-link " to={ROUTES.UI_COMPILER} >
+               UI Compiler
+            </NavLink>
        
           </div>
         </div>

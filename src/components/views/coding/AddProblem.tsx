@@ -140,8 +140,8 @@ const AddProblem: React.FC = () => {
 
   
   useEffect(()=>{
-    setChangeText({...changeText,code:defaultCodeHandler(changeText.language)})
-  },[changeText.language])
+    setChangeText({...changeText,code:defaultCodeHandler(changeText.language)});
+  },[changeText.language]);
   
   console.log("pppppppppppppppppp",changeText.code,changeText.language);
   return (

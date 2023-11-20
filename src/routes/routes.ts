@@ -16,6 +16,7 @@ export const ROUTES = {
   TEST_DETAILS:"/test-deatils/:id",
   BLOG_DETAILS:"/blog/:id",
   TEST_LIST:"/test-list",
+  UI_COMPILER:"/ui-compiler",
 
 };
 
