@@ -41,6 +41,6 @@ export const defaultCodeHandler = (arg: string): string => {
     default:
       return `
       // Write Javascript code here
-      consol.log("Hello world !")`;
+      console.log("Hello world !")`;
   }
 };
