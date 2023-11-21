@@ -10,18 +10,17 @@ const useLocalStorage = (key:string,initialValue:any) => {
         return JSON.parse(jsonValue);
       }
       if(typeof initialValue==="function"){
-        return initialValue()
+        return initialValue();
       }else{
         return initialValue;
       }
   });
 
   useEffect(()=>{
-
+    localStorage.setItem(prefixedKey,JSON.stringify(value));
   },[prefixedKey,value]);
 
-
-  return {value,setValue};
+  return [value,setValue];
 }
 
 export default useLocalStorage

@@ -61,3 +61,9 @@ export const TestEndpoints={
   MCQ_LIST: BASE_URL?.concat("test").concat(ROUTES.MCQ),
   CREATE_NEW_MCQ: BASE_URL?.concat("test").concat(ROUTES.CREATE_NEW_MCQ),
 };
+
+
+export const ADMIN_ROUTES=[
+  ROUTES.CREATE_NEW_MCQ,ROUTES.CREATE_NEW_PROBLEM
+];
+
