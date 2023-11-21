@@ -20,11 +20,10 @@ import Home from "../components/views/coding/Home";
 import Navbar from "../components/utilities/Navbar/Navbar";
 import ReadBlog from "../components/views/blog/ReadBlog";
 import UiEditor from "../components/views/uiCompiler/UiEditor";
+import CommonCompiler from "../components/commonCMP/CommonCompiler";
 
 const PublicRoutes: React.FC = () => {
   const authData = useSelector((state: RootState) => state.auth.authData);
-  console.log("===============authData", authData);
-
   return (
     <>
       <Navbar />
@@ -86,6 +85,10 @@ const PublicRoutes: React.FC = () => {
         <Route
           path={ROUTES.UI_COMPILER}
           element={<ProtectedRoutes component={UiEditor} />}
+        />
+        <Route
+          path={ROUTES.CODE_COMPILER}
+          element={<ProtectedRoutes component={CommonCompiler} />}
         />
 
         <Route

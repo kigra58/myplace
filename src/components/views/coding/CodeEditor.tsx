@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import axios from "axios";
 import lodash from "lodash";
-import Themes from "./themes.json";
+import Themes from "../../../json/themes.json";
 
 import {
   COMPILERS,

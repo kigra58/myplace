@@ -7,6 +7,7 @@ export const ROUTES = {
   CREATE_NEW_PROBLEM: "/create-new-problem",
   CREATE_NEW_MCQ: "/create-mcq",
   COMPILER: "/compiler/:id",
+  CODE_COMPILER: "/compiler",
   SUBMIT_SOLUTION:"/submit-solution",
   ADD_BLOG:"/create-blog",
   EDIT_BLOG:"/edit-blog/:id",
@@ -64,6 +65,7 @@ export const TestEndpoints={
 
 
 export const ADMIN_ROUTES=[
-  ROUTES.CREATE_NEW_MCQ,ROUTES.CREATE_NEW_PROBLEM
+  ROUTES.CREATE_NEW_MCQ,ROUTES.CREATE_NEW_PROBLEM,ROUTES.ADD_BLOG,ROUTES.EDIT_BLOG
 ];
+
 

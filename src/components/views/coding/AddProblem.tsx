@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
 import Editor from "@monaco-editor/react";
-import Themes from "./themes.json";
+import Themes from "../../../json/themes.json";
 import {
   COMPILERS,
   // COMPILER_URL,
@@ -16,10 +15,10 @@ import {
 // import useCompiler from "../../../hooks/useCompiler";
 // import useSaveProblem from "../../../hooks/useSaveProblem";
 import { CodingEndpoints } from "../../../routes/routes";
+import { defaultCodeHandler } from "../../../helper/helper";
 import CommonSelect from "../../commonCMP/CommonSelect";
 import InputOutputCMP from "./InputOutputCMP";
 import usePost from "../../../hooks/usePost";
-import { defaultCodeHandler } from "../../../helper/helper";
 
 interface ICategory {
   category: string;
