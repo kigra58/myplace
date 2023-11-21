@@ -187,7 +187,7 @@ const CodeEditor: React.FC = () => {
       <div className="row p-1">
         <div className="col-md-9">
           <Editor
-            height="85vh"
+            height="76vh"
             defaultLanguage={"javascript"}
             language={changeLang}
             // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}

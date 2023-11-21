@@ -208,7 +208,7 @@ const AddProblem: React.FC = () => {
       <div className="row p-2">
         <div className="col-md-9">
           <Editor
-            height="85vh"
+            height="76vh"
             defaultLanguage={"javascript"}
             // defaultValue={
             //   changeText.language !== ""
