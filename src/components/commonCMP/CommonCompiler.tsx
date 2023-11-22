@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import { Editor } from "@monaco-editor/react";
-import CommonSelect from "./CommonSelect";
-import useForm from "../../hooks/useForm";
-import Themes from "../../json/themes.json";
 import {
   COMPILERS,
   FONTSIZE,
@@ -10,9 +7,13 @@ import {
   LANGUAGES,
   THEME,
 } from "../../helper/constant";
-import usePost from "../../hooks/usePost";
 import { CodingEndpoints } from "../../routes/routes";
 import { defaultCodeHandler } from "../../helper/helper";
+
+import CommonSelect from "./CommonSelect";
+import useForm from "../../hooks/useForm";
+import Themes from "../../json/themes.json";
+import usePost from "../../hooks/usePost";
 
 const CommonCompiler: React.FC = () => {
   const {
@@ -38,16 +39,24 @@ const CommonCompiler: React.FC = () => {
     },
   });
 
-  useEffect(()=>{
-    const timeout = setTimeout(() => {
-        localStorage.setItem("compileCode",formData.code);
-    }, 250);
-      return () => clearTimeout(timeout);
-  },[formData.code]);
+  // useEffect(()=>{
+  //   const timeout = setTimeout(() => {
+  //       localStorage.setItem("compileCode",formData.code);
+  //   }, 250);
+  //     return () => clearTimeout(timeout);
+  // },[formData.code]);
 
+  
   useEffect(()=>{
     setFormData({...formData,code:defaultCodeHandler(formData.language)});
   },[formData.language]);
+
+  // order is matter
+  useEffect(()=>{
+   if(localStorage.getItem("compileCode")!==null){
+    setFormData({...formData,code:localStorage.getItem("compileCode")});
+   }
+  },[])
 
   return (
     <div className="container-fluid">
@@ -89,7 +98,6 @@ const CommonCompiler: React.FC = () => {
             height="76vh"
             defaultLanguage={"javascript"}
             language={formData.language}
-            // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}
             value={formData.code}
             theme={formData.theme}
             options={{ fontSize: formData.fontSize }}
@@ -129,7 +137,7 @@ const CommonCompiler: React.FC = () => {
             )}
           </button>
           {/* SAVE CODE  */}
-          {/* <button
+          <button
             className="btn btn-dark mx-3"
             type="button"
             onClick={() => {
@@ -137,7 +145,7 @@ const CommonCompiler: React.FC = () => {
             }}
           >
             SAVE CODE
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
