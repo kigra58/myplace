@@ -4,7 +4,6 @@ import Editor from "@monaco-editor/react";
 import Themes from "../../../json/themes.json";
 import {
   COMPILERS,
-  // COMPILER_URL,
   FONTSIZE,
   FONT_SIZE,
   LANGUAGES,
@@ -12,8 +11,7 @@ import {
   firstELe,
   lastELe,
 } from "../../../helper/constant";
-// import useCompiler from "../../../hooks/useCompiler";
-// import useSaveProblem from "../../../hooks/useSaveProblem";
+
 import { CodingEndpoints } from "../../../routes/routes";
 import { defaultCodeHandler } from "../../../helper/helper";
 import CommonSelect from "../../commonCMP/CommonSelect";
@@ -26,7 +24,7 @@ interface ICategory {
 
 const AddProblem: React.FC = () => {
   const [categoryList, setCotegoryList] = useState<ICategory[]>([]);
-  // const [compilerList, setCompilerList] = useState([]);
+
   const [changeText, setChangeText] = useState({
     title: "",
     category: "",
@@ -37,12 +35,6 @@ const AddProblem: React.FC = () => {
     fontSize: FONT_SIZE[0],
   });
 
-  // const { compilerLoading, compilerOutput, setCompilerOutput, compileHandler } =
-  //   useCompiler({
-  //     code: changeText.code,
-  //     fileType: changeText.language,
-  //     input: changeText.input,
-  //   });
 
   const {
     responeData,
@@ -142,7 +134,7 @@ const AddProblem: React.FC = () => {
     setChangeText({...changeText,code:defaultCodeHandler(changeText.language)});
   },[changeText.language]);
   
-  console.log("pppppppppppppppppp",changeText.code,changeText.language);
+ 
   return (
     <div className="p-1">
       <div className="row mt-5">
@@ -209,13 +201,7 @@ const AddProblem: React.FC = () => {
           <Editor
             height="76vh"
             defaultLanguage={"javascript"}
-            // defaultValue={
-            //   changeText.language !== ""
-            //     ? defaultCodeHandler(changeText.language)
-            //     : undefined
-            // }
             language={changeText.language}
-            // value={changeText.code}
             value={ changeText.language !== ""
             ? defaultCodeHandler(changeText.language)
             : undefined}

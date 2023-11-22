@@ -1,12 +1,21 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../../routes/routes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../rtk/store";
+import { logout } from "../../../rtk/reducer";
 
 const Navbar: React.FC = () => {
+  const dispatch = useDispatch();
+  const navigte = useNavigate();
   const authData = useSelector((state: RootState) => state.auth.authData);
   // console.log("===========ttttttttttt", authData?.user?.account_type);
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    navigte(ROUTES.HOME);
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm p-3">
       <div className="container-fluid">
@@ -61,9 +70,17 @@ const Navbar: React.FC = () => {
                 <NavLink className="nav-link " to={ROUTES.TEST_LIST}>
                   Tests
                 </NavLink>
-                
+
                 <NavLink className="nav-link " to={ROUTES.CODE_COMPILER}>
                   Compiler
+                </NavLink>
+                
+                <NavLink
+                  className="nav-link"
+                  onClick={logoutHandler}
+                  to="#"
+                >
+                  Logout
                 </NavLink>
               </>
             ) : (
@@ -86,6 +103,14 @@ const Navbar: React.FC = () => {
 
                 <NavLink className="nav-link " to={ROUTES.CODE_COMPILER}>
                   Compiler
+                </NavLink>
+
+                <NavLink
+                  className="nav-link"
+                  onClick={logoutHandler}
+                  to="#"
+                >
+                  Logout
                 </NavLink>
               </>
             )}
