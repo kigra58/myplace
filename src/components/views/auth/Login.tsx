@@ -2,9 +2,10 @@ import React from "react";
 import axios from "axios";
 
 import { useDispatch } from "react-redux";
-import useForm from "../../../hooks/useForm";
 import { AuthEndpoints } from "../../../routes/routes";
 import { login } from "../../../rtk/reducer";
+import useForm from "../../../hooks/useForm";
+import ToastMsg from "../../commonCMP/Toast";
 
 
 
@@ -19,9 +20,12 @@ const Login: React.FC = () => {
         try {
           const {data}=await axios.post(`${AuthEndpoints.LOGIN}`,args);
           if(data && data.success){
-            localStorage.setItem("ATK",JSON.stringify(data.data))
+            localStorage.setItem("ATK",JSON.stringify(data.data));
             dispatch(login(data.data));
-          };
+          }
+          else{
+             <ToastMsg success={false} message={data.message} />
+          }
         } catch (error) {
           console.error(error);
         }

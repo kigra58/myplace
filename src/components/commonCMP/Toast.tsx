@@ -1,5 +1,4 @@
-import React from "react";
-import { Toast } from "react-bootstrap";
+import React, { useEffect } from "react";
 
 interface IProps {
   message: string;
@@ -8,20 +7,38 @@ interface IProps {
 
 const ToastMsg: React.FC<IProps> = ({ message, success }) => {
   console.log("==============oooooooooo", message, success);
-  if (message !== "") {
+  const  ele = document.getElementById("toast");
+  ele && ele.setAttribute("class", "show");
+ 
+  useEffect(()=>{
+    const timeout=  setTimeout(()=>{
+      if(ele)
+       ele.className = ele.className.replace("show", ""); 
+    }, 500);
+    return () => clearTimeout(timeout);
+  },[message]);
+
+
     return (
-      <Toast delay={500} bg={`${success ? "primary" : "danger"} text-white`}>
-        {/* <Toast.Header>
-          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-          <strong className="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-        </Toast.Header> */}
-        <Toast.Body>{message}</Toast.Body>
-      </Toast>
+      <div
+        className="toast align-items-center text-white bg-primary border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        id="toast"
+      >
+        <div className="d-flex">
+          <div className="toast-body">{message}</div>
+          <button
+            type="button"
+            className="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+      </div>
     );
-  } else {
-    return null;
-  }
+  
 };
 
 export default ToastMsg;
