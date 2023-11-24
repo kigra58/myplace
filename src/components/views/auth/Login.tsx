@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AuthEndpoints } from "../../../routes/routes";
 import { login } from "../../../rtk/reducer";
@@ -6,18 +6,23 @@ import useForm from "../../../hooks/useForm";
 import usePost from "../../../hooks/usePost";
 
 const Login: React.FC = () => {
-  const dispatch = useDispatch();
   const { formData: loginData, onChangeHandler } = useForm({
     email: "",
     password: "",
   });
 
-  const { postData, responeData, loading } = usePost({
+  const { postData, loading } = usePost({
     url: `${AuthEndpoints.LOGIN}`,
     payload: loginData,
+    from:"login"
   });
 
-
+  // useEffect(()=>{
+  //    if(responeData){
+  //      dispatch(login(responeData as any))
+  //      localStorage.setItem("ATK",JSON.stringify(responeData));
+  //    }
+  // },[responeData])
 
   return (
     <div>
