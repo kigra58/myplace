@@ -56,7 +56,7 @@ const CommonCompiler: React.FC = () => {
    if(localStorage.getItem("compileCode")!==null){
     setFormData({...formData,code:localStorage.getItem("compileCode")});
    }
-  },[])
+  },[]);
 
   return (
     <div className="container-fluid">
