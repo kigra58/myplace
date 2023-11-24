@@ -11,3 +11,11 @@ export interface ILangData {
   language: string;
   input: string;
 }
+
+
+export interface IUser{
+  first_name:string;
+  last_name:string;
+  account_type:string
+  _id:string
+}

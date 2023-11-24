@@ -1,3 +1,5 @@
+import toast  from "react-hot-toast";
+
 export const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
@@ -44,3 +46,20 @@ export const defaultCodeHandler = (arg: string): string => {
       console.log("Hello world !")`;
   }
 };
+
+export const tostMsg=(success:boolean,msg:string)=>{
+  const option={
+    // icon: '👏',
+    icon: success ? '✔️':`❌`,
+    style: {
+      // borderRadius: '10px',
+      background: '#0d6efd',
+      color: '#fff',
+      // with:"50px"
+    },
+  }
+ 
+
+  success ? toast["success"](msg,option) : toast["error"](msg,option);
+}
+

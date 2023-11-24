@@ -1,38 +1,21 @@
-import axios from "axios";
-import React, {  } from "react";
+import React from "react";
 import { AuthEndpoints } from "../../../routes/routes";
 import useForm from "../../../hooks/useForm";
-
+import usePost from "../../../hooks/usePost";
 
 const Signup: React.FC = () => {
+  const { formData: newUser, onChangeHandler } = useForm({
+    accountType: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
 
-
- const {formData:newUser,onChangeHandler}=useForm({ 
- accountType:"",
- firstName:"",
- lastName: "",
- email: "",
- password:"",
-});
-  
-  const createNewUser = async (args: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    accountType:string;
-  }) => {
-    try {
-      const { data } = await axios.post(`${AuthEndpoints.SIGNUP}`, args);
-      if (data && data.success) {
-        console.log("==============responseeeeee", data.data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  console.log("=================newuser",newUser);
+  const { postData, loading } = usePost({
+    url: `${AuthEndpoints.SIGNUP}`,
+    payload: newUser,
+  });
 
   return (
     <div>
@@ -94,7 +77,7 @@ const Signup: React.FC = () => {
           <div className="form-check">
             <input
               onChange={(e) => onChangeHandler(e)}
-              value={newUser.accountType}  
+              value={newUser.accountType}
               className="form-check-input"
               required
               type="radio"
@@ -109,8 +92,8 @@ const Signup: React.FC = () => {
         <div className="col-md-5">
           <div className="form-check">
             <input
-             onChange={(e) => onChangeHandler(e)}
-             value={newUser.accountType}  
+              onChange={(e) => onChangeHandler(e)}
+              value={newUser.accountType}
               className="form-check-input"
               type="radio"
               required
@@ -126,10 +109,16 @@ const Signup: React.FC = () => {
 
       <div className="mt-4">
         <button
+          disabled={loading}
           className="btn btn-primary col-md-12 shadow"
-          onClick={() => createNewUser(newUser)}
+          onClick={postData}
         >
-          REGISTER{" "}
+          REGISTER {}
+          <span
+            className="spinner-grow spinner-grow-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
         </button>
       </div>
     </div>

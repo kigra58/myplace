@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IUser } from "../interfaces";
 
 
-interface IUser{
-  first_name:string;
-  last_name:string;
-  account_type:string
-  _id:string
-}
+
 
 export const authSlice = createSlice({
   name: "auth",
