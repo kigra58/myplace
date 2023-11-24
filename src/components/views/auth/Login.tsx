@@ -17,10 +17,7 @@ const Login: React.FC = () => {
     payload: loginData,
   });
 
-  if (responeData) {
-    localStorage.setItem("ATK", JSON.stringify(responeData));
-    dispatch(login(responeData as any));
-  }
+
 
   return (
     <div>
@@ -58,11 +55,13 @@ const Login: React.FC = () => {
           onClick={postData}
         >
           SIGN IN
+          {loading &&
           <span
             className="spinner-grow spinner-grow-sm"
             role="status"
             aria-hidden="true"
-          ></span>
+          />
+          }
         </button>
       </div>
       <div className="mt-3 text-center">

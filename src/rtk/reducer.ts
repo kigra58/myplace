@@ -1,19 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IUser } from "../interfaces";
 
-
-
-
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    authData:localStorage.getItem("ATK")?JSON.parse(`${localStorage.getItem("ATK")}`):undefined ,
+    authData: localStorage.getItem("ATK")
+      ? JSON.parse(`${localStorage.getItem("ATK")}`)
+      : undefined,
   },
   reducers: {
-    login: (state: { authData:IUser }, action: { payload: IUser }) => {
+    login: (state: { authData: IUser }, action: { payload: IUser }) => {
       state.authData = action.payload;
     },
-    updateData: (state: { authData:IUser }, action: { payload: IUser }) => {
+    updateData: (state: { authData: IUser }, action: { payload: IUser }) => {
       state.authData = action.payload;
     },
 
@@ -24,7 +23,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout,updateData} = authSlice.actions;
+export const { login, logout, updateData } = authSlice.actions;
 
 export default authSlice.reducer;
-

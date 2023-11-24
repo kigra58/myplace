@@ -113,12 +113,15 @@ const Signup: React.FC = () => {
           className="btn btn-primary col-md-12 shadow"
           onClick={postData}
         >
-          REGISTER {}
-          <span
-            className="spinner-grow spinner-grow-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
+          REGISTER {
+            loading &&(
+              <span
+                className="spinner-grow spinner-grow-sm"
+                role="status"
+                aria-hidden="true"
+              />
+            )
+          }
         </button>
       </div>
     </div>
