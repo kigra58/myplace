@@ -190,7 +190,6 @@ const CodeEditor: React.FC = () => {
             height="76vh"
             defaultLanguage={"javascript"}
             language={changeLang}
-            // defaultValue={changeLang==="py"? "# Write your code": "// write your code"}
             value={formData.code}
             theme={formData.theme}
             options={{ fontSize: formData.fontSize }}
