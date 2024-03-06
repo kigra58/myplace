@@ -23,7 +23,7 @@ import UiEditor from "../components/views/uiCompiler/UiEditor";
 import CommonCompiler from "../components/commonCMP/CommonCompiler";
 
 const PublicRoutes: React.FC = () => {
-  const authData = useSelector((state: RootState) => state.auth.authData);
+  const authData = useSelector((state: RootState) => state?.auth?.authData);
   return (
     <>
       <Navbar />

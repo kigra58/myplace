@@ -9,7 +9,7 @@ interface Props {
     component: React.ComponentType;
 }
 const ProtectedRoutes:React.FC<Props> = ({component:RouteComponent}) => {
-  const authData=useSelector((state:RootState)=>state.auth.authData);
+  const authData=useSelector((state:RootState)=>state?.auth?.authData);
   
 if (authData && authData.token) return <RouteComponent />;
 return <Navigate to={ROUTES.LOGIN} />;
