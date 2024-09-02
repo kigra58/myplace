@@ -72,11 +72,14 @@ export const pushFileToS3 = async (signedUrl: string, file: Blob) => {
     "Content-Type": file.type,
     "x-amz-acl": "public-read",
   });
-  return fetch(signedUrl, {
+
+  const res=await fetch(signedUrl, {
     method: "PUT",
     headers: myHeaders,
     body: file,
   });
+  console.log("resresresresresresresresresresres",res)
+  return res;
 };
 
 
@@ -93,9 +96,10 @@ export const uploadFileOnS3 = async (file: Blob, filePath: string) => {
   };
   let signedUrl;
   const {data} = await axios.post(`${BlogEndpoints.GENERATE_URL}`,body);
-
+  console.log("dataaaaaaaaaaa",data);
   if (data && data.success && data.data) {
     const response = await pushFileToS3(data.data, file);
+    console.log("responseresponseresponseresponse",response);
     if (response && response.url) {
       signedUrl = response?.url.split("?Content")?.[0];
     }

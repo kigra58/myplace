@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 import { BlogEndpoints } from "../../../routes/routes";
-import { convertBase64ToBlog, convertToBase64 } from "../../../helper/helper";
+import { convertBase64ToBlog, convertToBase64, filePath, uploadFileOnS3 } from "../../../helper/helper";
 import { useParams } from "react-router-dom";
 import usePost from "../../../hooks/usePost";
 import useForm from "../../../hooks/useForm";
@@ -65,7 +65,14 @@ const AddBlog: React.FC = () => {
        getBlob(thumbnail);
     }
   },[bloginfo]);
-
+ 
+  const generateUrlHandler = async () => {
+    if (fileChange) {
+     const url= await uploadFileOnS3(fileChange, await filePath(101, fileChange?.name));
+     url && setImageUrl(url);
+    }
+    
+  };
 
   return (
     <div className="container-fluid">
@@ -141,6 +148,7 @@ const AddBlog: React.FC = () => {
             <button
               disabled={loading}
               onClick={() => {
+                generateUrlHandler();
                 postData();
                 setChangeText("");
                 setFormData({
