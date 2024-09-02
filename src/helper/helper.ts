@@ -1,4 +1,7 @@
+import axios from "axios";
 import toast  from "react-hot-toast";
+import config from "../config/config";
+import { BlogEndpoints } from "../routes/routes";
 
 export const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
@@ -62,4 +65,45 @@ export const tostMsg=(success:boolean,msg:string)=>{
 
   success ? toast["success"](msg,option) : toast["error"](msg,option);
 }
+
+
+export const pushFileToS3 = async (signedUrl: string, file: Blob) => {
+  const myHeaders = new Headers({
+    "Content-Type": file.type,
+    "x-amz-acl": "public-read",
+  });
+  return fetch(signedUrl, {
+    method: "PUT",
+    headers: myHeaders,
+    body: file,
+  });
+};
+
+
+/**
+ * Generating File URL
+ * @param file
+ * @param filePath
+ * @returns
+ */
+export const uploadFileOnS3 = async (file: Blob, filePath: string) => {
+  const body = {
+    filePath,
+    fileFormat: file.type as string,
+  };
+  let signedUrl;
+  const {data} = await axios.post(`${BlogEndpoints.GENERATE_URL}`,body);
+
+  if (data && data.success && data.data) {
+    const response = await pushFileToS3(data.data, file);
+    if (response && response.url) {
+      signedUrl = response?.url.split("?Content")?.[0];
+    }
+  }
+  return signedUrl;
+};
+
+export const filePath = async (authId: number, name?: string) => {
+  return `${config.bucket}/${new Date().getTime()}-${authId}-${name}`;
+};
 

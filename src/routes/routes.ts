@@ -52,6 +52,7 @@ export const StudentEndpoints = {
 export const BlogEndpoints={
   CREATE_NEW_BLOG:BASE_URL?.concat("blog").concat(ROUTES.ADD_BLOG),
   BLOG_LIST:BASE_URL?.concat("blog").concat(ROUTES.BLOG_LIST),
+  GENERATE_URL:BASE_URL?.concat("blog").concat("/generate-url"),
   BLOG_DEATILS:BASE_URL?.concat("blog").concat("/:id")
 };
 

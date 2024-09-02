@@ -55,6 +55,8 @@ const AddBlog: React.FC = () => {
   };
 
   
+
+  
   useEffect(()=>{
     if(bloginfo && bloginfo.length>0){
        const {title,content,category,thumbnail}=bloginfo[0];
